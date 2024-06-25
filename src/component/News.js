@@ -11,7 +11,7 @@ const News = () => {
         }
         const fetchnewsData = async () => {
             //alternate key d5d28d52b0bb46c6ad00604982c11c1c
-            const newsData = await fetch("https://newsdata.io/api/1/news?apikey=pub_d5d28d52b0bb46c6ad00604982c11c1c&q=india")
+            const newsData = await fetch("https://newsdata.io/api/1/news?apikey=pub_473389f15a890a0ce83a56ef0464a1761ca69&country=in&language=en")
             const jsondata = await newsData.json()
             console.log(jsondata);
             if (jsondata.status === 'success') {

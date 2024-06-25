@@ -11,7 +11,7 @@ const News = () => {
             return
         }
         const fetchnewsData = async () => {
-            const newsData = await fetch('https://newsapi.org/v2/top-headlines?apiKey=866b4fb339b0407ea72e70ba9d333b01&country=in')
+            const newsData = await fetch('https://newsapi.org/v2/top-headlines?apiKey=d5d28d52b0bb46c6ad00604982c11c1c&country=in')
             const jsondata = await newsData.json()
             console.log(jsondata.articles);
             if (jsondata.status === 'ok') {

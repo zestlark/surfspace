@@ -4,6 +4,44 @@
 
 @layer utilities {
 
+    .tab-box.active {
+        position: fixed;
+        width: 100vw;
+        height: 100dvh;
+        backdrop-filter: blur(10px);
+        top: 0;
+        left: 0;
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tab-box.active .tab-card {
+        max-width: 300px;
+        min-width: 300px;
+        transition: 0.5s all;
+        margin: 0.75rem;
+    }
+
+    .tab-box.active .tab-card img {
+        margin-top: -20px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    }
+
+    .tab-box.active .tab-card p small {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .tab-box .tab-card .details {
+        display: none;
+    }
+
+    .tab-box.active .tab-card .details {
+        display: block;
+    }
+
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
         display: none;
@@ -20,6 +58,11 @@
     .slide-top {
         -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
         animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    .slide-bottom {
+        -webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        animation: slide-bottom 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
 
     .slide-none {
@@ -51,5 +94,31 @@
     100% {
         -webkit-transform: translateY(0);
         transform: translateY(0);
+    }
+}
+
+@-webkit-keyframes slide-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    100% {
+        -webkit-transform: translateY(100vh);
+        transform: translateY(100vh);
+        display: none;
+    }
+}
+
+@keyframes slide-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    100% {
+        -webkit-transform: translateY(100vh);
+        transform: translateY(100vh);
+        display: none;
     }
 }

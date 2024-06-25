@@ -1,1 +1,1 @@
-export const colorcode = ['#E9E4FC', '#D8EDFE', '#FEE0DA', '#FFEBA4']
+export const colorcode = ['#E9E4FC', '#D8EDFE', '#FEE0DA', '#FFEBA4', '#FFEBD2', '#F9D5D5', '#EAC1DC', '#C3B4DF', '#97ADDD']

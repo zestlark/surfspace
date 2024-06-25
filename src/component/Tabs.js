@@ -79,8 +79,8 @@ const Tabs = () => {
             <p className='px-1'><small>Tabs</small></p>
             <div className='p-[2px] mt-1 flex flex-wrap items-stretch'>
 
-                <div className='w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] h-[100px] p-[2px] mb-1' onClick={handleNewTab}>
-                    <div className='w-full border-2 dark:border-slate-500 border-slate-300 flex justify-center items-center h-full rounded-md'>
+                <div className='w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1' onClick={handleNewTab}>
+                    <div className='w-full border-2 dark:border-slate-500 border-slate-300 flex justify-center items-center min-h-[90px] rounded-md'>
                         <i className="ri-add-large-line"></i>
                     </div>
                 </div>
@@ -88,8 +88,8 @@ const Tabs = () => {
                 {tabs.map((tab, index) => {
 
                     return (
-                        <div key={tab.url} id={`tab-box-${index}`} onClick={handleTabBoxclick} className='tab-box w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1 h-[100px] '>
-                            <div onContextMenu={handleContext} onClick={handleTabCardClick} className='tab-card bg-slate-50 dark:bg-slate-800 p-2 rounded-lg shadow-sm'>
+                        <div key={tab.url} id={`tab-box-${index}`} onClick={handleTabBoxclick} className='tab-box w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1 '>
+                            <div onContextMenu={handleContext} onClick={handleTabCardClick} className='tab-card bg-slate-50 dark:bg-slate-800 p-2 rounded-lg shadow-sm min-h-[90px]'>
                                 <img className='w-[65%] mt-1 max-w-[100px] aspect-square mx-auto rounded-lg pointer-events-none' src={tab.icon} alt='' />
                                 <p className='pointer-events-none'><small className='text-center block truncate mt-2'>{tab.title || 'untitled'}</small></p>
 

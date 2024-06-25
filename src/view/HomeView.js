@@ -7,6 +7,7 @@ import Notes from '../component/Notes';
 import Weather from '../component/Weather';
 import History from '../component/History';
 import Tabs from '../component/Tabs';
+import News from '../component/News';
 import { swipeEventUpDown } from '../app/scripts/swipeEvent';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
@@ -42,49 +43,53 @@ const HomeView = () => {
     }, [])
 
     return (
-        <div className='max-w-[1200px] mx-auto px-3 md:flex gap-5'>
-            <div className='w-full'>
-                <header className='py-5 flex justify-between items-center'>
-                    <h1 className='text-xl font-sans '>SurfSpace</h1>
-                    <span className='flex items-center gap-3'>
-                        <i className={`text-2xl md:hidden ${noteSection ? 'ri-sticky-note-fill' : 'ri-sticky-note-line'}`}
-                            onClick={() => setnoteSection(!noteSection)}></i>
+        <>
+            <div className='max-w-[1200px] mx-auto px-3 md:flex gap-5'>
+                <div className='w-full'>
+                    <header className='py-5 flex justify-between items-center'>
+                        <h1 className='text-xl font-sans '>SurfSpace</h1>
+                        <span className='flex items-center gap-3'>
+                            <i className={`text-2xl md:hidden ${noteSection ? 'ri-sticky-note-fill' : 'ri-sticky-note-line'}`}
+                                onClick={() => setnoteSection(!noteSection)}></i>
 
-                        <Theme />
-                    </span>
-                </header>
+                            <Theme />
+                        </span>
+                    </header>
 
-                <h1 className='text-3xl mt-6 md:mt-12 font-medium'>Customize, Organize and Simplify</h1>
+                    <h1 className='text-3xl mt-6 md:mt-12 font-medium'>Customize, Organize and Simplify</h1>
 
-                <div className='flex justify-between items-center mt-6 flex-wrap gap-5'>
-                    <div className='flex justify-start items-center gap-2 flex-wrap'>
-                        {zestlarkApps.map(app => (
-                            <a key={app.name} className="flex items-center justify-start gap-2 p-2 px-2 pr-4 w-auto rounded-3xl" style={{ backgroundColor: app.color }} href={app.url}><img className='w-6' src={app.icon} alt='' /><li className='list-none text-black text-sm opacity-80'>{app.name}</li></a>
-                        ))}
+                    <div className='flex justify-between items-center mt-6 flex-wrap gap-5'>
+                        <div className='flex justify-start items-center gap-2 flex-wrap'>
+                            {zestlarkApps.map(app => (
+                                <a key={app.name} className="flex items-center justify-start gap-2 p-2 px-2 pr-4 w-auto rounded-3xl" style={{ backgroundColor: app.color }} href={app.url}><img className='w-6' src={app.icon} alt='' /><li className='list-none text-black text-sm opacity-80'>{app.name}</li></a>
+                            ))}
+                        </div>
+                        <Weather />
                     </div>
-                    <Weather />
+
+                    <div className='bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center'>
+                        <img className='w-10' src={selectedSearchEngine.image} alt='' />
+                        <input ref={searchBox} onKeyDown={handleenterSearch} className='p-3 pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
+                        <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
+                    </div>
+
+                    <History addHistoryToSearch={handleAddHistoryToSearch} />
+
+                    <Tabs />
+
+                    <News />
+
                 </div>
 
-                <div className='bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center'>
-                    <img className='w-10' src={selectedSearchEngine.image} alt='' />
-                    <input ref={searchBox} onKeyDown={handleenterSearch} className='p-3 pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
-                    <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
+                <div id='notesBox' className={`z-20 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-gray-50 dark:bg-slate-700 md:bg-transparent dark:md:bg-transparent h-[90%] md:h-auto rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
+                    <div className='h-[5px] bg-slate-200 dark:bg-slate-500 w-[40%] mx-auto mb-3 rounded-md md:hidden'></div>
+                    <Notes />
                 </div>
 
-                <History addHistoryToSearch={handleAddHistoryToSearch} />
+                <NoteShowBig />
 
-                <Tabs />
-
-            </div>
-
-            <div id='notesBox' className={`pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-gray-50 dark:bg-slate-700 md:bg-transparent dark:md:bg-transparent h-[90%] md:h-auto rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
-                <div className='h-[5px] bg-slate-200 dark:bg-slate-500 w-[40%] mx-auto mb-3 rounded-md md:hidden'></div>
-                <Notes />
-            </div>
-
-            <NoteShowBig />
-
-        </div >
+            </div >
+        </>
     );
 }
 

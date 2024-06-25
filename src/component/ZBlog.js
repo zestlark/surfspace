@@ -32,7 +32,7 @@ const ZBlog = () => {
         <div className='mt-4 md:p-2 pt-0'>
             <p className='px-1'><small>Blogs</small></p>
             <div className='z-0 mt-1'>
-                {zblogData.length > 0 ? zblogData.reverse().splice(0, 5).map((blog, index) => {
+                {zblogData.length > 0 ? zblogData.reverse().slice(0, 5).map((blog, index) => {
                     return (
                         <div key={index} className='w-full pb-3 sm:p-1'>
                             <div className="card bg-slate-50 dark:bg-slate-800 max-w-[full] w-full h-full aspect-video">

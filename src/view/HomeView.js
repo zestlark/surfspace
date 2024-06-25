@@ -48,7 +48,7 @@ const HomeView = () => {
             <div className='max-w-[1200px] mx-auto px-3 md:flex gap-5'>
                 <div className='w-full'>
                     <header className='py-5 flex justify-between items-center'>
-                        <h1 className='text-xl font-sans '>SurfSpace</h1>
+                        <h1 className='text-xl'>Surf Space</h1>
                         <span className='flex items-center gap-3'>
                             <i className={`text-2xl md:hidden ${noteSection ? 'ri-sticky-note-fill' : 'ri-sticky-note-line'}`}
                                 onClick={() => setnoteSection(!noteSection)}></i>

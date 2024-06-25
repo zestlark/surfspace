@@ -46,7 +46,7 @@ const ZBlog = () => {
                                     <p className='line-clamp-2'>{htmltotext(blog.body)}</p>
                                     <div className="card-actions justify-between items-center mt-3">
                                         <small>{moment(blog.createdAt).fromNow()}</small>
-                                        <a href={blog.title}>
+                                        <a href={`https://blog-zestlark-0.web.app/blog/${blog.title}`}>
                                             <button className="p-2 rounded-md text-sm bg-[#00000022]">Read More</button>
                                         </a>
                                     </div>

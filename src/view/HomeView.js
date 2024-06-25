@@ -8,6 +8,7 @@ import Weather from '../component/Weather';
 import History from '../component/History';
 import Tabs from '../component/Tabs';
 import News from '../component/News';
+import ZBlog from '../component/ZBlog';
 import { swipeEventUpDown } from '../app/scripts/swipeEvent';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
@@ -81,9 +82,13 @@ const HomeView = () => {
 
                 </div>
 
-                <div id='notesBox' className={`z-20 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-gray-50 dark:bg-slate-700 md:bg-transparent dark:md:bg-transparent h-[90%] md:h-auto rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
-                    <div className='h-[5px] bg-slate-200 dark:bg-slate-500 w-[40%] mx-auto mb-3 rounded-md md:hidden'></div>
-                    <Notes />
+                <div className='w-full md:w-auto md:min-w-[350px] md:max-w-[350px]'>
+                    <div id='notesBox' className={`z-20 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-gray-50 dark:bg-slate-700 md:bg-transparent dark:md:bg-transparent h-[90%] md:h-auto rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
+                        <div className='h-[5px] bg-slate-200 dark:bg-slate-500 w-[40%] mx-auto mb-3 rounded-md md:hidden'></div>
+                        <Notes />
+                    </div>
+
+                    <ZBlog />
                 </div>
 
                 <NoteShowBig />

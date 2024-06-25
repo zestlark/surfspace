@@ -27,11 +27,11 @@ const News = () => {
     return (
         <div className='mt-4'>
             <p className='px-1'><small>News</small></p>
-            <div className='flex flex-wrap z-0 mt-2'>
+            <div className='flex flex-wrap z-0 mt-1'>
                 {newsdata.length > 0 ? newsdata.map((news, index) => {
                     if (news.urlToImage) {
                         return (
-                            <div key={index} className='w-full sm:w-1/2 pb-3 sm:p-2'>
+                            <div key={index} className='w-full sm:w-1/2 pb-3 sm:p-1'>
                                 <div className="card bg-base-100 image-full w-full h-full shadow-xl aspect-video">
                                     <figure>
                                         <img className='aspect-video'
@@ -54,7 +54,9 @@ const News = () => {
                     } else {
                         return ''
                     }
-                }) : ''}
+                }) : (<div className='w-full bg-slate-100 dark:bg-slate-800 flex justify-center items-center min-h-[100px] rounded-2xl mt-2'>
+                    <span className="loading loading-ring loading-md"></span>
+                </div>)}
             </div>
         </div>
     );

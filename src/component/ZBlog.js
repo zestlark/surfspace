@@ -35,7 +35,7 @@ const ZBlog = () => {
                 {zblogData.length > 0 ? zblogData.reverse().splice(0, 5).map((blog, index) => {
                     return (
                         <div key={index} className='w-full pb-3 sm:p-1'>
-                            <div className="card dark:bg-slate-800 max-w-[full] bg-base-100 w-full h-full shadow-sm aspect-video">
+                            <div className="card bg-slate-50 dark:bg-slate-800 max-w-[full] w-full h-full aspect-video">
                                 <figure>
                                     <img className='aspect-video object-cover'
                                         src={blog.imageUrl}

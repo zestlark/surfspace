@@ -88,7 +88,7 @@ const Tabs = () => {
                 {tabs.map((tab, index) => {
 
                     return (
-                        <div key={tab.url} id={`tab-box-${index}`} onClick={handleTabBoxclick} className='tab-box w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1 '>
+                        <div key={tab.url} id={`tab-box-${index}`} onClick={handleTabBoxclick} className='tab-box w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1 z-20'>
                             <div onContextMenu={handleContext} onClick={handleTabCardClick} className='tab-card bg-slate-50 dark:bg-slate-800 p-2 rounded-lg shadow-sm min-h-[90px]'>
                                 <img className='w-[65%] mt-1 max-w-[100px] aspect-square mx-auto rounded-lg pointer-events-none' src={tab.icon} alt='' />
                                 <p className='pointer-events-none'><small className='text-center block truncate mt-2'>{tab.title || 'untitled'}</small></p>

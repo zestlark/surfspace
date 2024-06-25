@@ -7,7 +7,7 @@ const Weather = () => {
 
     const weatherColorSelector = (temperature) => {
         if (Number(temperature)) {
-            console.log(temperature);
+            // console.log(temperature);
 
             if (temperature > 35) {
                 return colorcode[2] + '99';
@@ -26,7 +26,7 @@ const Weather = () => {
             const data = await fetch('https://api.weatherapi.com/v1/current.json?key=3d1c17ce26b6459cada53111222506&q=malad,india&aqi=no');
             const res = await data.json();
             setWeather(res);
-            console.log(res);
+            // console.log(res);
         };
 
         if (!hasFetchedWeather.current) {

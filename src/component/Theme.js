@@ -16,8 +16,8 @@ const Theme = () => {
         document.documentElement.classList.add(newTheme);
         setTheme(newTheme);
 
-        console.log(document.documentElement.classList);
-        console.log(theme);
+        // console.log(document.documentElement.classList);
+        // console.log(theme);
     };
 
     return (

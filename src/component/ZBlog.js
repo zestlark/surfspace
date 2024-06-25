@@ -14,13 +14,13 @@ const ZBlog = () => {
         const sessionzblogData = sessionStorage.getItem(btoa('zblogData'))
         if (sessionzblogData) {
             setzblogData(JSON.parse(sessionzblogData))
-            console.log(sessionzblogData);
+            // console.log(sessionzblogData);
             return
         }
         const fetchzblogData = async () => {
             const zblogData = await fetch('https://z-blog-4h05.onrender.com/blog')
             const jsondata = await zblogData.json()
-            console.log(jsondata);
+            // console.log(jsondata);
             setzblogData(jsondata)
             sessionStorage.setItem(btoa('zblogData'), JSON.stringify(jsondata))
 

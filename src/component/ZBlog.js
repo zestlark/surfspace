@@ -21,7 +21,7 @@ const ZBlog = () => {
             const zblogData = await fetch('https://z-blog-4h05.onrender.com/blog')
             const jsondata = await zblogData.json()
             // console.log(jsondata);
-            setzblogData(jsondata)
+            setzblogData(jsondata.reverse())
             sessionStorage.setItem(btoa('zblogData'), JSON.stringify(jsondata))
 
         }
@@ -32,7 +32,7 @@ const ZBlog = () => {
         <div className='mt-4 md:p-2 pt-0'>
             <p className='px-1'><small>Blogs</small></p>
             <div className='z-0 mt-1'>
-                {zblogData.length > 0 ? zblogData.reverse().slice(0, 5).map((blog, index) => {
+                {zblogData.length > 0 ? zblogData.slice(0, 4).map((blog, index) => {
                     return (
                         <div key={index} className='w-full pb-3 sm:p-1'>
                             <div className="card bg-slate-50 dark:bg-slate-800 max-w-[full] w-full h-full aspect-video">
@@ -41,7 +41,7 @@ const ZBlog = () => {
                                         src={blog.imageUrl}
                                         alt="" />
                                 </figure>
-                                <div className="card-body">
+                                <div className="p-3">
                                     <h2 className="card-title line-clamp-1">{blog.title}</h2>
                                     <p className='line-clamp-2'>{htmltotext(blog.body)}</p>
                                     <div className="card-actions justify-between items-center mt-3">

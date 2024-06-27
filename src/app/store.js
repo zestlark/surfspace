@@ -4,6 +4,7 @@ import appHistoryReducer from "./reducers/appHistoryReducer";
 import appNotesReducer from "./reducers/appNotesReducer";
 import appSearchEngineReducer from "./reducers/appSearchEngineReducer";
 import appTabsReducer from "./reducers/appTabsReducer";
+import appSettingReducer from "./reducers/appSettingReducer";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         appHistory: appHistoryReducer,
         appNotes: appNotesReducer,
         appSearchEngine: appSearchEngineReducer,
-        appTabs: appTabsReducer
+        appTabs: appTabsReducer,
+        appsetting: appSettingReducer
     }
 })

@@ -16,7 +16,8 @@ export const appnotes = createSlice({
     },
     reducers: {
         addNotes: (state, actions) => {
-            state.notes.unshift({ id: nanoid(), text: actions.payload, time: Date.now() });
+            if (actions.payload)
+                state.notes.unshift({ id: nanoid(), text: actions.payload, time: Date.now() });
         },
         deletenotes: (state, actions) => {
             state.notes = state.notes.filter(item => item.id !== actions.payload)

@@ -16,9 +16,9 @@ export const appsearchEngine = createSlice({
             const inputValue = actions.payload.trim();
 
             if (urlPattern.test(inputValue)) {
-                alert('Opening URL in new tab');
+                //alert('Opening URL in new tab');
                 const slantcheck = inputValue.split('://');
-                
+
                 if (slantcheck.length > 1) {
                     window.open(inputValue, '_blank');
                 } else {

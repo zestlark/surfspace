@@ -9,6 +9,7 @@ import History from '../component/History';
 import Tabs from '../component/Tabs';
 import News from '../component/News';
 import ZBlog from '../component/ZBlog';
+import Setting from '../component/Setting';
 import { swipeEventUpDown } from '../app/scripts/swipeEvent';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
@@ -21,6 +22,7 @@ const HomeView = () => {
     const selectedSearchEngine = useSelector(state => state.appSearchEngine.selectedEngine)
 
     const [noteSection, setnoteSection] = useState(false)
+    const [settingSection, setsettingSection] = useState(false)
 
     const handleAddHistoryToSearch = (search) => {
         searchBox.current.value = search
@@ -49,9 +51,18 @@ const HomeView = () => {
                 <div className='w-full'>
                     <header className='py-5 flex justify-between items-center'>
                         <h1 className='text-xl'>Surf Space</h1>
-                        <span className='flex items-center gap-3'>
-                            <i className={`text-2xl md:hidden ${noteSection ? 'ri-sticky-note-fill' : 'ri-sticky-note-line'}`}
-                                onClick={() => setnoteSection(!noteSection)}></i>
+                        <span className='flex items-center gap-2'>
+
+                            <label className="swap swap-rotate text-xl bg-slate-100 dark:bg-slate-700 w-8 h-8 rounded-full  md:hidden">
+                                <i className={`${noteSection ? 'ri-sticky-note-fill' : 'ri-sticky-note-line'}`}
+                                    onClick={() => setnoteSection(!noteSection)}></i>
+                            </label>
+
+                            <label className="swap swap-rotate text-xl bg-slate-100 dark:bg-slate-700 w-8 h-8 rounded-full">
+                                <i className="ri-settings-line"></i>
+                                <i className={`${settingSection ? 'ri-settings-fill' : 'ri-settings-line'}`}
+                                    onClick={() => setsettingSection(!settingSection)}></i>
+                            </label>
 
                             <Theme />
                         </span>
@@ -59,8 +70,8 @@ const HomeView = () => {
 
                     <h1 className='text-3xl mt-6 md:mt-12 font-medium'>Customize, Organize and Simplify</h1>
 
-                    <div className='flex justify-between items-center mt-6 flex-wrap gap-5'>
-                        <div className='flex justify-start items-center gap-2 flex-wrap'>
+                    <div className='flex justify-between items-center mt-6 flex-wrap lg:flex-nowrap gap-5'>
+                        <div className='flex justify-start items-center gap-2 flex-wrap lg:flex-nowrap lg:w-full'>
                             {zestlarkApps.map(app => (
                                 <a key={app.name} className="flex items-center justify-start gap-2 p-2 px-2 pr-4 w-auto rounded-3xl" style={{ backgroundColor: app.color }} href={app.url}><img className='w-6' src={app.icon} alt='' /><li className='list-none text-black text-sm opacity-80'>{app.name}</li></a>
                             ))}
@@ -69,7 +80,7 @@ const HomeView = () => {
                     </div>
 
                     <div className='bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center'>
-                        <img className='w-10' src={selectedSearchEngine.image} alt='' />
+                        <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer' src={selectedSearchEngine.image} alt='' />
                         <input ref={searchBox} onKeyDown={handleenterSearch} className='p-3 pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
                         <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
                     </div>
@@ -90,6 +101,10 @@ const HomeView = () => {
 
                     <ZBlog />
                 </div>
+
+                {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-20 flex justify-center items-end md:items-center backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
+                    <Setting />
+                </div> : ''}
 
                 <NoteShowBig />
 

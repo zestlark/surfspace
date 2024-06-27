@@ -26,12 +26,12 @@ const Weather = () => {
 
     useEffect(() => {
         const fetchWeather = async () => {
-            const latAndlonfetch = await fetch('http://ip-api.com/json/')
+            const latAndlonfetch = await fetch('https://freeipapi.com/api/json')
             const latAndlondata = await latAndlonfetch.json();
-            if (latAndlondata.status === 'success') {
-                dispatch(setLocation({ country: latAndlondata.country, timezone: latAndlondata.timezone, regionName: latAndlondata.regionName, countryCode: latAndlondata.countryCode }))
-                let { lat, lon } = latAndlondata;
-                const data = await fetch(`https://api.weatherapi.com/v1/current.json?key=3d1c17ce26b6459cada53111222506&q=${lat},${lon}&aqi=no`);
+            if (latAndlondata.latitude) {
+                dispatch(setLocation({ country: latAndlondata.countryName, timezone: latAndlondata.timeZones[0], regionName: latAndlondata.regionName, countryCode: latAndlondata.countryCode }))
+                let { latitude, longitude } = latAndlondata;
+                const data = await fetch(`https://api.weatherapi.com/v1/current.json?key=3d1c17ce26b6459cada53111222506&q=${latitude},${longitude}&aqi=no`);
                 const res = await data.json();
                 setWeather(res);
             }

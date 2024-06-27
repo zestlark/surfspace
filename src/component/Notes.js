@@ -5,7 +5,7 @@ import { addNotes } from '../app/reducers/appNotesReducer';
 import { colorcode } from '../app/scripts/colors';
 import { showNotesBig } from '../app/reducers/appNotesReducer';
 
-const Notes = () => {
+const Notes = ({ closeNotesPage }) => {
     const dispatch = useDispatch()
     const appNotes = useSelector(state => state.appNotes.notes)
 
@@ -17,6 +17,8 @@ const Notes = () => {
 
     return (
         <>
+            <p className='md:hidden p-0 pt-2 pb-3 bg-white dark:bg-slate-800 sticky top-0 flex justify-start items-center gap-3'><i onClick={() => { closeNotesPage() }} className="ri-arrow-left-s-line text-2xl bg-slate-100 dark:bg-slate-900 w-9 h-9 flex justify-center items-center rounded-full"></i> Notes</p>
+
             <div className='flex gap-3 justify-between items-stretch flex-wrap mt-3 overflow-scroll max-h-[100%] no-scrollbar'>
                 {appNotes.length !== 8 ?
                     <div className='text-gray-400 min-w-[48%] max-w-[48%] border-2 text-2xl rounded-2xl flex justify-center items-center' onClick={() => { dispatch(addNotes(prompt("enter data"))) }}>+</div>

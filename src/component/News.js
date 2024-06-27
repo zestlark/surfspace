@@ -34,7 +34,7 @@ const News = () => {
         <div className='mt-4'>
             <p className='px-1'><small>News</small></p>
             <div className='flex flex-wrap z-0 mt-1'>
-                {newsdata.length > 0 ? newsdata.slice(0,10).map((news, index) => {
+                {newsdata.length > 0 ? newsdata.slice(0, 10).map((news, index) => {
                     if (news.image_url) {
                         return (
                             <div key={index} className='w-full sm:w-1/2 pb-3 sm:p-1'>
@@ -42,7 +42,9 @@ const News = () => {
                                     <figure>
                                         <img className='aspect-video'
                                             src={news.image_url}
-                                            alt="" />
+                                            alt=""
+                                            onError={(e => { e.target.style.display = 'none' })}
+                                        />
                                     </figure>
                                     <div className="card-body relative -z-0">
                                         <h2 className="card-title line-clamp-3">{news.title}</h2>

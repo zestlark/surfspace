@@ -46,7 +46,7 @@ const Weather = () => {
 
     if (weather?.current)
         return (
-            <div className='w-full md:max-w-[340px] lg:max-w-[400px] p-1 rounded-full flex gap-3 items-center justify-between md:justify-end'>
+            <div className='w-full md:max-w-[340px] lg:max-w-[400px] md:p-1 rounded-full flex gap-3 items-center justify-between md:justify-end'>
                 <h3 className='text-xl font-bold bg-slate-100 dark:bg-slate-700 h-12 flex items-center px-3 rounded-full'>{weather?.current.temp_c} °C</h3>
                 <div>
                     <p className='max-w-[150px] lg:max-w-[280px] block truncate'>{weather?.current?.condition.text}</p>

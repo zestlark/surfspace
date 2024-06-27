@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { appalert } from '../app/reducers/overpagesReducer';
 import { zestlarkApps } from '../app/scripts/zestlark';
@@ -10,7 +10,7 @@ import Tabs from '../component/Tabs';
 import News from '../component/News';
 import ZBlog from '../component/ZBlog';
 import Setting from '../component/Setting';
-import { swipeEventUpDown } from '../app/scripts/swipeEvent';
+// import { swipeEventUpDown } from '../app/scripts/swipeEvent';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
 import NoteShowBig from '../overpages/NoteShowBig';
@@ -41,9 +41,9 @@ const HomeView = () => {
         }
     }
 
-    useEffect(() => {
-        swipeEventUpDown('#notesBox', () => { document.getElementById('notesBox').style.height = '100dvh' }, () => { document.getElementById('notesBox').style.height = '90%'; setnoteSection(false) })
-    }, [])
+    // useEffect(() => {
+    //     swipeEventUpDown('#notes-hambar', () => { document.getElementById('notesBox').style.height = '100dvh' }, () => { document.getElementById('notesBox').style.height = '90%'; setnoteSection(false) })
+    // }, [])
 
     return (
         <>
@@ -79,8 +79,8 @@ const HomeView = () => {
                         <Weather />
                     </div>
 
-                    <div className='bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center'>
-                        <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer' src={selectedSearchEngine.image} alt='' />
+                    <div className='bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
+                        <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer rounded-full' src={selectedSearchEngine.image} alt='' />
                         <input ref={searchBox} onKeyDown={handleenterSearch} className='p-3 pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
                         <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
                     </div>
@@ -94,16 +94,15 @@ const HomeView = () => {
                 </div>
 
                 <div className='w-full md:w-auto md:min-w-[350px] md:max-w-[350px]'>
-                    <div id='notesBox' className={`z-20 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-gray-50 dark:bg-slate-700 md:bg-transparent dark:md:bg-transparent h-[90%] md:h-auto rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
-                        <div className='h-[5px] bg-slate-200 dark:bg-slate-500 w-[40%] mx-auto mb-3 rounded-md md:hidden'></div>
-                        <Notes />
+                    <div id='notesBox' className={`z-20 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-white dark:bg-slate-800 md:bg-transparent dark:md:bg-transparent h-[100%] md:h-auto md:rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
+                        <Notes closeNotesPage={() => { setnoteSection(false) }} />
                     </div>
 
                     <ZBlog />
                 </div>
 
-                {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-20 flex justify-center items-end md:items-center backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
-                    <Setting />
+                {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-20 flex justify-center items-end md:items-center md:backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
+                    <Setting closeSettingPage={() => { setsettingSection(false) }} />
                 </div> : ''}
 
                 <NoteShowBig />

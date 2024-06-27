@@ -17,7 +17,7 @@ const Setting = () => {
     }
 
     return (
-        <div id='settingPage' onClick={(e) => e.stopPropagation()} className='w-[100%] md:w-[350px] bg-white dark:bg-slate-800 min-h-[350px] max-h-[90%] md:max-h-[500px] overflow-scroll p-3 rounded-2xl pb-5 no-scrollbar slide-top'>
+        <div onClick={(e) => e.stopPropagation()} className='w-[100%] md:w-[350px] bg-white dark:bg-slate-800 min-h-[350px] max-h-[90%] md:max-h-[500px] overflow-scroll p-3 rounded-2xl pb-5 no-scrollbar slide-top'>
             <p>Setting</p>
             <div>
                 <div className='flex items-center justify-between mt-4 mb-2'>

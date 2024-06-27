@@ -45,6 +45,11 @@ const HomeView = () => {
         swipeEventUpDown('#notesBox', () => { document.getElementById('notesBox').style.height = '100dvh' }, () => { document.getElementById('notesBox').style.height = '90%'; setnoteSection(false) })
     }, [])
 
+    useEffect(() => {
+        if (settingSection)
+            swipeEventUpDown('#settingBox', () => { }, () => { document.getElementById('settingBox').style.height = '90%'; setsettingSection(false) })
+    }, [settingSection])
+
     return (
         <>
             <div className='max-w-[1200px] mx-auto px-3 md:flex gap-5'>
@@ -102,7 +107,7 @@ const HomeView = () => {
                     <ZBlog />
                 </div>
 
-                {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-20 flex justify-center items-end md:items-center backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
+                {settingSection ? <div id='settingBox' className='fixed top-0 left-0  w-screen h-[100dvh] z-20 flex justify-center items-end md:items-center backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
                     <Setting />
                 </div> : ''}
 

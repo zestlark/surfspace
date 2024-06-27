@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotesBig } from '../app/reducers/appNotesReducer';
 import { deletenotes } from '../app/reducers/appNotesReducer';
+import { appconfirm } from '../app/reducers/overpagesReducer';
 import moment from 'moment';
 
 const NoteShowBig = () => {
@@ -15,13 +16,18 @@ const NoteShowBig = () => {
     }
 
     const handleNoteDelete = (id) => {
-        dispatch(deletenotes(id))
-        dispatch(showNotesBig(false, '', {}))
+        dispatch(appconfirm({
+            message: "Do you want to delete this note",
+            confirmFunction: function () {
+                dispatch(deletenotes(id))
+                dispatch(showNotesBig(false, '', {}))
+            }
+        }))
     }
 
     if (notesBigShowState)
         return (
-            <div className='fixed flex  justify-center items-center w-screen h-screen top-0 left-0 z-10 backdrop-blur-sm' onClick={handleNotesBigClose}>
+            <div className='fixed flex  justify-center items-center w-screen h-screen top-0 left-0 z-30 backdrop-blur-sm' onClick={handleNotesBigClose}>
                 <div className="mockup-code w-[90%] md:w-auto md:max-w-[500px] text-slate-800 slide-top" style={{ background: notesBigShowColor }} onClick={(e) => { e.stopPropagation() }}>
                     <p className='break-words px-5'>
                         {noteSBigShowData?.text}

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from './view/HomeView';
 import AlertBox from './overpages/Alert'
+import ConfIrmBox from "./overpages/ConfIrmBox";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -28,6 +29,7 @@ function App() {
       </BrowserRouter>
 
       <AlertBox />
+      <ConfIrmBox />
     </div>
   );
 }

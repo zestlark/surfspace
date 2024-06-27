@@ -14,10 +14,12 @@ import Setting from '../component/Setting';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
 import NoteShowBig from '../overpages/NoteShowBig';
+import SearchSuggestion from '../component/SearchSuggestion';
 
 const HomeView = () => {
     const dispatch = useDispatch()
     const searchBox = useRef()
+    const [SearchValue, setSearchValue] = useState('')
 
     const selectedSearchEngine = useSelector(state => state.appSearchEngine.selectedEngine)
 
@@ -39,6 +41,14 @@ const HomeView = () => {
         if (e.keyCode === 13) {
             searchToData()
         }
+    }
+
+    const handleInpputFocus = (e) => {
+        window.location.href = '#search'
+    }
+
+    const handleSearchSuggestion = (data) => {
+        searchBox.current.value = data
     }
 
     // useEffect(() => {
@@ -79,10 +89,14 @@ const HomeView = () => {
                         <Weather />
                     </div>
 
-                    <div className='bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
+                    <div className='SearchBox bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
                         <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer rounded-full' src={selectedSearchEngine.image} alt='' />
-                        <input ref={searchBox} onKeyDown={handleenterSearch} className='p-3 pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
+                        <input id='search' autoComplete="off" onFocus={handleInpputFocus} onChange={e => setSearchValue(e.target.value)} ref={searchBox} onKeyDown={handleenterSearch} className='p-3 pl-3 lg:pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
                         <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
+                    </div>
+
+                    <div className={`bg-slate-50 dark:bg-slate-800 mt-2 sticky top-[70px] z-30 rounded-3xl overflow-hidden ${SearchValue.length === 0 ? 'hidden' : ''}`}>
+                        <SearchSuggestion searchValue={SearchValue} handleSearchSuggestion={handleSearchSuggestion} />
                     </div>
 
                     <History addHistoryToSearch={handleAddHistoryToSearch} />

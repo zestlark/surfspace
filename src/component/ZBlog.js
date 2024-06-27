@@ -18,12 +18,16 @@ const ZBlog = () => {
             return
         }
         const fetchzblogData = async () => {
-            const zblogData = await fetch('https://z-blog-4h05.onrender.com/blog')
-            const jsondata = await zblogData.json()
-            // console.log(jsondata);
-            setzblogData(jsondata.reverse())
-            sessionStorage.setItem(btoa('zblogData'), JSON.stringify(jsondata))
+            try {
+                const zblogData = await fetch('https://z-blog-4h05.onrender.com/blog')
+                const jsondata = await zblogData.json()
+                // console.log(jsondata);
+                setzblogData(jsondata.reverse())
+                sessionStorage.setItem(btoa('zblogData'), JSON.stringify(jsondata))
 
+            } catch (e) {
+                setzblogData([])
+            }
         }
 
         fetchzblogData()

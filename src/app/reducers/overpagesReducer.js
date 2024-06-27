@@ -4,7 +4,10 @@ export const overpage = createSlice({
     name: "overpage",
     initialState: {
         alertPageView: false,
-        alertPageMesage: 'Welcome'
+        alertPageMesage: 'Welcome',
+        confirmPageView: false,
+        confirmPageMesage: 'Are you sure?',
+        confirmButtonClickFunction: ''
     }
     ,
     reducers: {
@@ -15,10 +18,20 @@ export const overpage = createSlice({
         appalertclose: (state, actions) => {
             state.alertPageView = false;
             state.alertPageMesage = ""
+        },
+        appconfirm: (state, actions) => {
+            state.confirmPageMesage = actions.payload.message
+            state.confirmPageView = true;
+            state.confirmButtonClickFunction = actions.payload.confirmFunction
+        },
+        appconfirmclose: (state, actions) => {
+            state.confirmPageView = false;
+            state.confirmPageMesage = ""
+            state.confirmButtonClickFunction = ''
         }
     }
 })
 
-export const { appalert, appalertclose } = overpage.actions;
+export const { appalert, appalertclose, appconfirm, appconfirmclose } = overpage.actions;
 
 export default overpage.reducer;

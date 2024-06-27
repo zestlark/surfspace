@@ -5,7 +5,7 @@ import { urlPattern } from "../scripts/urlCheckRegex";
 export const appsearchEngine = createSlice({
     name: 'searchEngine',
     initialState: {
-        selectedEngine: searchEngine['bing'],
+        selectedEngine: searchEngine['google'],
     },
     reducers: {
         changeSearchEngine: (state, actions) => {

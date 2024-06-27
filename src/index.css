@@ -4,6 +4,21 @@
 
 @layer utilities {
 
+    /* .SearchBox {
+        transition: 0.5s all;
+    }
+
+    .SearchBox:has(> input:focus) {
+        outline: thin dotted red;
+        background: red;
+        position: fixed;
+        top: 10px;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+    } */
+
     .tab-box.active {
         position: fixed;
         width: 100vw;

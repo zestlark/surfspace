@@ -13,7 +13,7 @@ const Alert = () => {
     }
     if (alertPageView)
         return (
-            <div className=" flex justify-center items-center z-10 h-screen w-screen fixed top-0 left-0 backdrop-blur-sm">
+            <div className=" flex justify-center items-center z-30 h-screen w-screen fixed top-0 left-0 backdrop-blur-sm">
                 <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-4 px-5 w-[300px] text-neutral-content shadow-sm">
                     <div className="items-center text-center text-black dark:text-white">
                         <h2 className="font-bold text-xl text-center">Alert <i className="ri-alert-fill text-red-500"></i></h2>

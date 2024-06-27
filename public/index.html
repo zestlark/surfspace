@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light no-scrollbar">
+<html lang="en" class="light no-scrollbar scroll-smooth">
 
 <head>
   <meta charset="utf-8" />
@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
-  <meta name="description" content="Your Advance Browser Startup page | Access you all data from any device and and Browser" />
+  <meta name="description"
+    content="Your Advance Browser Startup page | Access you all data from any device and and Browser" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -39,6 +40,15 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+  <div id="output"></div>
+
+  <script>
+    function mysearchFunction(data) {
+      window.mysearchAutoComplete = data[1]
+    } 
+  </script>
+  <script id="searchfunctionscript"
+    src="https://www.google.com/complete/search?client=hp&q=deep&callback=mysearchFunction"></script>
 </body>
 
 </html>

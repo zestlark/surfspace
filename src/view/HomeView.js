@@ -94,14 +94,14 @@ const HomeView = () => {
                 </div>
 
                 <div className='w-full md:w-auto md:min-w-[350px] md:max-w-[350px]'>
-                    <div id='notesBox' className={`z-20 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-white dark:bg-slate-800 md:bg-transparent dark:md:bg-transparent h-[100%] md:h-auto md:rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
+                    <div id='notesBox' className={`z-30 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-white dark:bg-slate-800 md:bg-transparent dark:md:bg-transparent h-[100%] md:h-auto md:rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
                         <Notes closeNotesPage={() => { setnoteSection(false) }} />
                     </div>
 
                     <ZBlog />
                 </div>
 
-                {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-20 flex justify-center items-end md:items-center md:backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
+                {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-30 flex justify-center items-end md:items-center md:backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
                     <Setting closeSettingPage={() => { setsettingSection(false) }} />
                 </div> : ''}
 

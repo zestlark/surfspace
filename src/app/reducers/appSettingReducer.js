@@ -23,7 +23,7 @@ export const appSetting = createSlice({
                 BodyImageUrl: 'https://images.pexels.com/photos/1353938/pexels-photo-1353938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             }
         },
-        selectedBackgroundImageStyleName: 'style3'
+        selectedBackgroundImageStyleName: 'none'
     },
     reducers: {
         setLocation: (state, actions) => {

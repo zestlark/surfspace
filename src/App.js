@@ -8,7 +8,7 @@ import { useEffect } from "react";
 function App() {
   const background = useSelector(state => state.appsetting.background)
   const selectedBackgroundImageStyleName = useSelector(state => state.appsetting.selectedBackgroundImageStyleName)
-  console.log(background[selectedBackgroundImageStyleName]);
+  // console.log(background[selectedBackgroundImageStyleName]);
   useEffect(() => {
     if (selectedBackgroundImageStyleName !== 'none') {
       document.body.style.backgroundImage = `url(${background[selectedBackgroundImageStyleName].BodyImageUrl})`;

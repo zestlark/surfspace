@@ -1,7 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const SearchSuggestion = ({ searchValue, handleSearchSuggestion }) => {
-    // const arrayy = [1, 2, 3, 4, 5]
+    const [suggestions, setSuggestions] = useState([]);
+
+    const fetchAutocompleteSuggestions = (searchTerm) => {
+        if (searchTerm) {
+            // Remove previous script tags
+            const scripts = document.querySelectorAll('#searchfunctionscript');
+            scripts.forEach(script => script.parentNode.removeChild(script));
+
+            // Create new script element
+            const script = document.createElement('script');
+            script.id = 'searchfunctionscript';
+            script.src = `https://www.google.com/complete/search?client=hp&q=${searchTerm}&callback=mysearchFunction`;
+            document.body.appendChild(script);
+        }
+    };
+
+    // Handle autocomplete suggestions callback
+    window.mysearchFunction = (data) => {
+        // Update state with autocomplete suggestions
+        setSuggestions(data[1]);
+    };
+
+    useEffect(() => {
+        fetchAutocompleteSuggestions(searchValue);
+    }, [searchValue]);
 
     const handleAutoCompleteSuggestions = (data) => {
         const div = document.createElement('div');
@@ -10,31 +34,35 @@ const SearchSuggestion = ({ searchValue, handleSearchSuggestion }) => {
         handleSearchSuggestion(text)
     }
 
-    useEffect(() => {
-        const fetchAutocompleteSuggestions = (searchTerm) => {
-            if (searchTerm) {
-                const scripts = document.querySelectorAll('#searchfunctionscript');
-                scripts.forEach(script => script.parentNode.removeChild(script));
-
-                const script = document.createElement('script');
-                script.id = 'searchfunctionscript';
-                script.src = `https://www.google.com/complete/search?client=hp&q=${searchTerm}&callback=mysearchFunction`;
-                document.body.appendChild(script);
+    const handleListEnter = (e) => {
+        e.preventDefault()
+        if (e.keyCode === 40) {
+            if (e.target.nextElementSibling) {
+                e.target.nextElementSibling.focus()
+            } else {
+                e.target.parentNode.firstChild.focus()
             }
-        };
-
-        fetchAutocompleteSuggestions(searchValue)
-    }, [searchValue])
+        }
+        else if (e.keyCode === 38) {
+            if (e.target.previousElementSibling) {
+                e.target.previousElementSibling.focus()
+            } else {
+                e.target.parentNode.lastChild.focus()
+            }
+        }
+        else if (e.keyCode === 13)
+            e.target.click()
+    }
     return (
-        <div>
-            {window.mysearchAutoComplete.map((e, index) => (
-                <li key={index} onClick={() => { handleAutoCompleteSuggestions(e[0]) }} className='list-none flex justify-start px-3 items-center py-2 focus:bg-slate-200 dark:focus:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 gap-1'>
-                    <i className="ri-search-line w-10 text-xl mx-[5px]"></i>
+        <div id='search-suggestion'>
+            {suggestions.map((e, index) => (
+                <button key={index} onKeyDown={handleListEnter} onClick={() => { handleAutoCompleteSuggestions(e[0]) }} className='list-none flex w-full justify-start px-3 items-center py-2 focus:bg-slate-200 selection:bg-red-500 dark:focus:bg-slate-700 gap-1 outline-none'>
+                    <i className="ri-search-line w-10 text-xl mx-[5px] flex justify-start"></i>
                     <span className='flex justify-between w-full items-center max-w-[89%] lg:max-w-full'>
                         <p className='truncate max-w-[90%] opacity-80' dangerouslySetInnerHTML={{ __html: e[0] }}></p>
                         <i className="ri-arrow-left-up-line text-xl opacity-80 float-right"></i>
                     </span>
-                </li>
+                </button>
             ))}
         </div>
     );

@@ -59,7 +59,7 @@ const Setting = ({ closeSettingPage }) => {
                     <div className='bg-slate-50 dark:bg-slate-900 px-3 py-3 pb-4 mt-3 rounded-lg flex flex-col gap-4'>
                         <p><small>Background</small></p>
                         <div className='flex overflow-scroll gap-2 no-scrollbar'>
-                            <div onClick={() => { dispatch(changeSelectedBackgroundImageStyleName('none')) }} className={`min-w-28 cursor-pointer h-full rounded-md aspect-video bg-slate-500 flex justify-center items-center ${selectedBackgroundImageStyleName === 'none' ? 'border-2 p-[0px] border-red-500' : ''}`}><i className="ri-prohibited-2-line text-2xl"></i></div>
+                            <div onClick={() => { dispatch(changeSelectedBackgroundImageStyleName('none')) }} className={`min-w-28 cursor-pointer h-full rounded-md aspect-video bg-slate-100 dark:bg-slate-500 flex justify-center items-center ${selectedBackgroundImageStyleName === 'none' ? 'border-2 p-[0px] border-red-500' : ''}`}><i className="ri-prohibited-2-line text-2xl"></i></div>
                             {Object.entries(backgroundImages).map(([key, background]) => {
                                 return (
                                     <img onClick={() => { dispatch(changeSelectedBackgroundImageStyleName(key)) }} className={`min-w-28 cursor-pointer h-full rounded-md aspect-video flex justify-center items-center ${selectedBackgroundImageStyleName === key ? 'border-2 p-[0px] border-red-500' : ''}`} key={key} src={background.BodyImageUrl} alt='' />

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { appalert } from '../app/reducers/overpagesReducer';
 import { zestlarkApps } from '../app/scripts/zestlark';
@@ -18,7 +18,6 @@ import SearchSuggestion from '../component/SearchSuggestion';
 
 const HomeView = () => {
     const dispatch = useDispatch()
-    const searchBox = useRef()
     const [SearchValue, setSearchValue] = useState('')
 
     const selectedSearchEngine = useSelector(state => state.appSearchEngine.selectedEngine)
@@ -27,19 +26,21 @@ const HomeView = () => {
     const [settingSection, setsettingSection] = useState(false)
 
     const handleAddHistoryToSearch = (search) => {
-        searchBox.current.value = search
+        setSearchValue(search)
     }
 
     const searchToData = async () => {
-        if (searchBox.current.value.length !== 0) {
-            dispatch(addAppHistory(searchBox.current.value))
-            dispatch(searchPreProcess(searchBox.current.value))
+        if (SearchValue.length !== 0) {
+            dispatch(addAppHistory(SearchValue))
+            dispatch(searchPreProcess(SearchValue))
         }
     }
 
     const handleenterSearch = (e) => {
         if (e.keyCode === 13) {
             searchToData()
+        } else if (e.keyCode === 40) {
+            document.getElementById('search-suggestion').firstChild.focus()
         }
     }
 
@@ -48,12 +49,11 @@ const HomeView = () => {
     }
 
     const handleSearchSuggestion = (data) => {
-        searchBox.current.value = data
+        if (data.toLowerCase() === SearchValue.toLowerCase()) {
+            searchToData()
+        }
+        setSearchValue(data)
     }
-
-    // useEffect(() => {
-    //     swipeEventUpDown('#notes-hambar', () => { document.getElementById('notesBox').style.height = '100dvh' }, () => { document.getElementById('notesBox').style.height = '90%'; setnoteSection(false) })
-    // }, [])
 
     return (
         <>
@@ -91,7 +91,7 @@ const HomeView = () => {
 
                     <div className='SearchBox bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
                         <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer rounded-full' src={selectedSearchEngine.image} alt='' />
-                        <input id='search' autoComplete="off" onFocus={handleInpputFocus} onChange={e => setSearchValue(e.target.value)} ref={searchBox} onKeyDown={handleenterSearch} className='p-3 pl-3 lg:pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
+                        <input id='search' autoComplete="off" onFocus={handleInpputFocus} onChange={e => setSearchValue(e.target.value)} value={SearchValue} onKeyDown={handleenterSearch} className='p-3 pl-3 lg:pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
                         <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
                     </div>
 

@@ -7,11 +7,9 @@ const News = () => {
     const countryCode = useSelector(state => state.appsetting.location.countryCode)
     useEffect(() => {
         if (countryCode) {
-            console.log(countryCode);
             const sessionnewsdata = sessionStorage.getItem(btoa('newsdata' + countryCode))
             if (sessionnewsdata) {
                 setnewsdata(JSON.parse(sessionnewsdata))
-                //console.log(JSON.parse(sessionnewsdata));
                 return
             }
             const fetchnewsData = async () => {

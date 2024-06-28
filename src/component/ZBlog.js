@@ -33,7 +33,7 @@ const ZBlog = () => {
         fetchzblogData()
     }, [])
     return (
-        <div className='mt-4 md:p-2 pt-0'>
+        <div className='mt-4 md:mt-0 md:p-2 pt-0'>
             <p className='px-1'><small>Blogs</small></p>
             <div className='z-0 mt-1'>
                 {zblogData.length > 0 ? zblogData.slice(0, 4).map((blog, index) => {

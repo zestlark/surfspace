@@ -1,4 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { colorcode } from "../scripts/colors";
 
 export const appnotes = createSlice({
     name: 'appnotes',
@@ -11,13 +12,22 @@ export const appnotes = createSlice({
             { id: nanoid(), text: 'lorem Ips incorrectly formatted', time: Date.now() }
         ],
         notesbigshowstate: false,
+        newNote: false,
         notesbigshowColor: '',
         notesbigshowData: {}
     },
     reducers: {
         addNotes: (state, actions) => {
-            if (actions.payload)
+            if (actions.payload) {
+                state.newNote = false
                 state.notes.unshift({ id: nanoid(), text: actions.payload, time: Date.now() });
+            }
+            else {
+                state.notesbigshowstate = true
+                state.notesbigshowData = ''
+                state.notesbigshowColor = colorcode[0]
+                state.newNote = true
+            }
         },
         deletenotes: (state, actions) => {
             state.notes = state.notes.filter(item => item.id !== actions.payload)
@@ -26,6 +36,7 @@ export const appnotes = createSlice({
             state.notesbigshowstate = actions.payload.state
             state.notesbigshowColor = actions.payload.color
             state.notesbigshowData = actions.payload.data
+            state.newNote = false
         }
     }
 })

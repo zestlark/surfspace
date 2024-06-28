@@ -13,6 +13,10 @@ const Notes = ({ closeNotesPage }) => {
         dispatch(showNotesBig({ state: state, color: color, data: data }))
     }
 
+    const handleNewNote = () => {
+        dispatch(addNotes())
+    }
+
     let colorcount = 0
 
     return (
@@ -21,7 +25,7 @@ const Notes = ({ closeNotesPage }) => {
 
             <div className='flex gap-3 justify-between items-stretch flex-wrap mt-3 overflow-scroll max-h-[100%] no-scrollbar'>
                 {appNotes.length !== 8 ?
-                    <div className='text-gray-400 min-w-[48%] max-w-[48%] border-2 text-2xl rounded-2xl flex justify-center items-center' onClick={() => { dispatch(addNotes(prompt("enter data"))) }}>+</div>
+                    <div className='text-gray-400 min-w-[48%] max-w-[48%] border-2 text-2xl rounded-2xl flex justify-center items-center' onClick={handleNewNote}>+</div>
                     : ''
                 }
 

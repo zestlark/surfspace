@@ -17,9 +17,7 @@ const SearchSuggestion = ({ searchValue, handleSearchSuggestion }) => {
         }
     };
 
-    // Handle autocomplete suggestions callback
     window.mysearchFunction = (data) => {
-        // Update state with autocomplete suggestions
         setSuggestions(data[1]);
     };
 

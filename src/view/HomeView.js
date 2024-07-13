@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { appalert } from '../app/reducers/overpagesReducer';
 import { zestlarkApps } from '../app/scripts/zestlark';
@@ -10,15 +10,19 @@ import Tabs from '../component/Tabs';
 import News from '../component/News';
 import ZBlog from '../component/ZBlog';
 import Setting from '../component/Setting';
+import EmailVerify from '../overpages/EmailVerify';
 // import { swipeEventUpDown } from '../app/scripts/swipeEvent';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
 import NoteShowBig from '../overpages/NoteShowBig';
 import SearchSuggestion from '../component/SearchSuggestion';
 import { openAuthPage } from '../app/reducers/appAuthReducer';
+import { auth } from '../app/firebase/config';
 
 const HomeView = () => {
     const dispatch = useDispatch()
+
+    const [emailVerifyPage, setemailVerifyPage] = useState(false)
 
     const [SearchValue, setSearchValue] = useState('')
 
@@ -60,6 +64,18 @@ const HomeView = () => {
     const handleopenauthform = () => {
         dispatch(openAuthPage())
     }
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user.emailVerified) {
+                setemailVerifyPage(false);
+                console.log(user);
+            } else {
+                setemailVerifyPage(true);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     return (
         <>
@@ -128,6 +144,8 @@ const HomeView = () => {
                 </div> : ''}
 
                 <NoteShowBig />
+
+                {emailVerifyPage ? <EmailVerify /> : <EmailVerify />}
 
             </div >
         </>

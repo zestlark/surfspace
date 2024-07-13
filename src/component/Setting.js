@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeSearchEngine } from '../app/reducers/appSearchEngineReducer';
 import { changeSelectedBackgroundImageStyleName } from '../app/reducers/appSettingReducer';
 import Theme from './Theme';
+import { auth } from '../app/firebase/config';
 
 const Setting = ({ closeSettingPage }) => {
     const dispatch = useDispatch()
@@ -11,6 +12,7 @@ const Setting = ({ closeSettingPage }) => {
     const location = useSelector(state => state.appsetting.location)
     const backgroundImages = useSelector(state => state.appsetting.background)
     const selectedBackgroundImageStyleName = useSelector(state => state.appsetting.selectedBackgroundImageStyleName)
+    // const user = useSelector(state => state.appAuth.user)
 
     const handleSearchEngineChange = (e) => {
         dispatch(changeSearchEngine(e.target.value))
@@ -24,8 +26,8 @@ const Setting = ({ closeSettingPage }) => {
                     <div className='flex items-center justify-start gap-2'>
                         <img className='w-16 rounded-full border-2 border-red-400 p-[2px]' src='https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=338&ext=jpg&ga=GA1.1.2116175301.1719360000&semt=ais_user' alt='' />
                         <div className='leading-5'>
-                            <p>John Wick</p>
-                            <p><small>johnwicl1234@gmail.com</small></p>
+                            <p>{auth?.currentUser?.displayName}</p>
+                            <p><small>{auth?.currentUser?.email}</small></p>
                         </div>
                     </div>
                     <i className="ri-arrow-right-s-line text-xl"></i>

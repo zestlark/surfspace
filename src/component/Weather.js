@@ -52,13 +52,13 @@ const Weather = () => {
     if (weather?.current)
         return (
             <div className='w-full md:max-w-[340px] lg:max-w-[400px] md:p-1 rounded-full flex gap-3 items-center justify-between md:justify-end'>
-                <h3 className='text-xl font-bold bg-slate-100 dark:bg-slate-700 h-12 flex items-center px-3 rounded-full'>{weather?.current.temp_c} °C</h3>
+                <h3 className='text-xl font-bold bg-slate-100 dark:bg-slate-700 h-12 flex items-center px-3 rounded-full'>{weather?.current?.temp_c} °C</h3>
                 <div>
-                    <p className='max-w-[150px] lg:max-w-[280px] block truncate'>{weather?.current?.condition.text}</p>
-                    <small className='max-w-[150px] lg:max-w-[280px] block truncate'>{weather?.location.name} , {weather?.location.region} , {weather?.location.country}</small>
+                    <p className='max-w-[150px] lg:max-w-[280px] block truncate'>{weather?.current?.condition?.text}</p>
+                    <small className='max-w-[150px] lg:max-w-[280px] block truncate'>{weather?.location?.name} , {weather?.location?.region} , {weather?.location?.country}</small>
                 </div>
                 <div className='min-w-12 max-w-12 h-12 flex justify-center items-center' style={{ clipPath: 'polygon(50.6% 0%, 82.8% 12%, 100% 43%, 92.8% 78%, 68.3% 100%, 31.7% 100%, 7.2% 78%, 0% 43%, 17.2% 12%)', background: weatherColorSelector(weather?.current.temp_c) }}>
-                    <img className='w-[85%] -mt-1' src={weather?.current.condition.icon} alt='' />
+                    <img className='w-[85%] -mt-1' src={weather?.current?.condition?.icon} alt='' />
                 </div>
             </div>
         );

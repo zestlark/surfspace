@@ -6,7 +6,7 @@ import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 
 const Tabs = () => {
     const dispatch = useDispatch()
-    dispatch(apptabsGet())
+    //dispatch(apptabsGet())
     const tabs = useSelector(state => state.appTabs.tabs)
     const [tabSavingProcess, settabSavingProcess] = useState(false);
 

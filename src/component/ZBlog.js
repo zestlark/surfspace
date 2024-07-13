@@ -36,24 +36,41 @@ const ZBlog = () => {
         <div className='mt-4 md:mt-0 md:p-2 pt-0'>
             <p className='px-1'><small>Blogs</small></p>
             <div className='z-0 mt-1'>
-                {zblogData.length > 0 ? zblogData.slice(0, 4).map((blog, index) => {
+                {zblogData.length > 0 ? zblogData.slice(0, 8).map((blog, index) => {
                     return (
-                        <div key={index} className='w-full pb-3 sm:p-1'>
-                            <div className="card bg-slate-50 dark:bg-slate-800 max-w-[full] w-full h-full aspect-video">
-                                <figure>
-                                    <img className='aspect-video object-cover'
-                                        src={blog.imageUrl}
-                                        alt="" />
-                                </figure>
-                                <div className="p-3">
-                                    <h2 className="card-title line-clamp-1">{blog.title}</h2>
-                                    <p className='line-clamp-2'>{htmltotext(blog.body)}</p>
-                                    <div className="card-actions justify-between items-center mt-3">
-                                        <small>{moment(blog.createdAt).fromNow()}</small>
-                                        <a href={`https://blog-zestlark-0.web.app/blog/${blog.title}`}>
-                                            <button className="p-2 rounded-md text-sm bg-[#00000022]">Read More</button>
-                                        </a>
-                                    </div>
+                        // <div key={index} className='w-full pb-3 sm:p-1'>
+                        //     <div className="card bg-slate-50 dark:bg-slate-800 max-w-[full] w-full h-full aspect-video">
+                        //         <figure>
+                        //             <img className='aspect-video object-cover'
+                        //                 src={blog.imageUrl}
+                        //                 alt="" />
+                        //         </figure>
+                        //         <div className="p-3">
+                        //             <h2 className="card-title line-clamp-1">{blog.title}</h2>
+                        //             <p className='line-clamp-2'>{htmltotext(blog.body)}</p>
+                        //             <div className="card-actions justify-between items-center mt-3">
+                        //                 <small>{moment(blog.createdAt).fromNow()}</small>
+                        //                 <a href={`https://zblogs-0.web.app/blog/${blog.title}`}>
+                        //                     <button className="p-2 rounded-md text-sm bg-[#00000022]">Read More</button>
+                        //                 </a>
+                        //             </div>
+                        //         </div>
+                        //     </div>
+                        // </div>
+
+                        <div key={index} className="flex bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden items-stretch mb-3">
+                            <img
+                                src={blog.imageUrl}
+                                alt=""
+                                className='w-[30%] min-w-[140px] aspect-video min-h-full object-cover' />
+                            <div className="p-3">
+                                <h2 className="font-medium line-clamp-2 overflow-hidden">{htmltotext(blog.title)}</h2>
+                                <p className='line-clamp-1 mb-2 max-w-[150px] text-sm'>{htmltotext(blog.body)}</p>
+                                <div className="card-actions justify-between items-center mt-3">
+                                    <small>{moment(blog.createdAt).fromNow()}</small>
+                                    <a href={`https://zblogs-0.web.app/blog/${blog.title}`}>
+                                        <button className="p-2 rounded-md text-sm bg-[#00000022]">Read More</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -61,6 +78,7 @@ const ZBlog = () => {
                 }) : (<div className='w-full bg-slate-100 dark:bg-slate-800 flex justify-center items-center min-h-[100px] rounded-2xl mt-2'>
                     <span className="loading loading-ring loading-md"></span>
                 </div>)}
+
             </div>
         </div>
     );

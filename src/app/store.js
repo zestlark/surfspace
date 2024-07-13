@@ -5,6 +5,7 @@ import appNotesReducer from "./reducers/appNotesReducer";
 import appSearchEngineReducer from "./reducers/appSearchEngineReducer";
 import appTabsReducer from "./reducers/appTabsReducer";
 import appSettingReducer from "./reducers/appSettingReducer";
+import appAuthReducer from "./reducers/appAuthReducer";
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         appNotes: appNotesReducer,
         appSearchEngine: appSearchEngineReducer,
         appTabs: appTabsReducer,
-        appsetting: appSettingReducer
+        appsetting: appSettingReducer,
+        appAuth: appAuthReducer,
     }
 })

@@ -15,9 +15,11 @@ import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
 import NoteShowBig from '../overpages/NoteShowBig';
 import SearchSuggestion from '../component/SearchSuggestion';
+import { openAuthPage } from '../app/reducers/appAuthReducer';
 
 const HomeView = () => {
     const dispatch = useDispatch()
+
     const [SearchValue, setSearchValue] = useState('')
 
     const selectedSearchEngine = useSelector(state => state.appSearchEngine.selectedEngine)
@@ -55,6 +57,10 @@ const HomeView = () => {
         setSearchValue(data)
     }
 
+    const handleopenauthform = () => {
+        dispatch(openAuthPage())
+    }
+
     return (
         <>
             <div className='max-w-[1200px] mx-auto px-3 md:flex gap-5'>
@@ -75,6 +81,8 @@ const HomeView = () => {
                             </label>
 
                             <Theme />
+
+                            <button className='btn' onClick={handleopenauthform}>Login</button>
                         </span>
                     </header>
 

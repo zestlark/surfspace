@@ -1,16 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotesBig } from '../app/reducers/appNotesReducer';
 import { deletenotes, addNotes } from '../app/reducers/appNotesReducer';
 import { appconfirm } from '../app/reducers/overpagesReducer';
 import moment from 'moment';
 
+import useAutosizeTextArea from "../app/scripts/autoResizeTextArea";
+
 const NoteShowBig = () => {
     const dispatch = useDispatch()
 
-    //const [newNotePlaceHolder, setnewNotePlaceHolder] = useState('Start typing here...')
-
     const newnotedata = useRef('')
+    const [newnotevalue, setnewnotevalue] = useState('');
 
     const notesBigShowState = useSelector(state => state.appNotes.notesbigshowstate)
     const noteSBigShowData = useSelector(state => state.appNotes.notesbigshowData)
@@ -32,26 +33,41 @@ const NoteShowBig = () => {
     }
 
     const handlenewNote = () => {
-        const data = newnotedata.current.innerHTML
-        dispatch(addNotes(data))
-        document.getElementById('bigNoteBox').click()
+        if (newnotevalue.length > 0) {
+            const data = newnotevalue
+            dispatch(addNotes(data))
+            document.getElementById('bigNoteBox').click()
+            setnewnotevalue('')
+        }
     }
 
-    // const handlePlaceHolder = () => {
-    //     if (newnotedata.current?.innerHTML) {
-    //         setnewNotePlaceHolder('')
-    //     } else {
-    //         setnewNotePlaceHolder('Start typing here...')
-    //     }
-    // }
+
+    useAutosizeTextArea(newnotedata.current, newnotevalue);
+
+    const handleNewValueChange = (evt) => {
+        const val = evt.target?.value;
+        setnewnotevalue(val);
+    };
 
     if (notesBigShowState)
         return (
             <div id='bigNoteBox' className='fixed flex  justify-center items-center w-screen h-screen top-0 left-0 z-30 backdrop-blur-sm' onClick={handleNotesBigClose}>
                 <div className="mockup-code max-h-[70%] overflow-scroll no-scrollbar w-[90%] md:w-auto md:max-w-[500px] text-slate-800 slide-top" style={{ background: notesBigShowColor }} onClick={(e) => { e.stopPropagation() }}>
-                    {isnewNote ? <p className={`px-5 outline-none`} ref={newnotedata} contentEditable>...</p> : <p className='break-words px-5'>
-                        {noteSBigShowData?.text}
-                    </p>}
+                    {isnewNote ?
+                        <textarea
+                            id="review-text"
+                            onChange={handleNewValueChange}
+                            placeholder="Start Writing"
+                            ref={newnotedata}
+                            rows={1}
+                            value={newnotevalue}
+                            className='bg-transparent border-none outline-none w-[100%] px-5 resize-none'
+                        />
+                        :
+                        <p className='break-words px-5'>
+                            {noteSBigShowData?.text}
+                        </p>}
+
 
 
                     <div className='px-5 flex justify-between items-center mt-3'>

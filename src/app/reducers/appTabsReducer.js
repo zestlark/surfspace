@@ -1,4 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { database, dbref, dbOnValue } from '../firebase/config'
+
+
+export const apptabsGet = createAsyncThunk('appTabsGet', async () => {
+    const databaseRef = dbref(database, 'temp');
+    dbOnValue(databaseRef, async (snapshot) => {
+        const data = await snapshot.val();
+        console.log(data);
+    });
+})
 
 export const apptabs = createSlice({
     name: 'apptabs',
@@ -55,6 +65,7 @@ export const apptabs = createSlice({
                 "icon": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://instagram.com&size=256"
             }
         ],
+        loaded: false,
     },
     reducers: {
         addTab: (state, action) => {
@@ -71,6 +82,11 @@ export const apptabs = createSlice({
         removeTab: (state, action) => {
             state.tabs.splice(action.payload, 1);
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(apptabsGet.fulfilled, (state, action) => {
+            state.loaded = true
+        })
     }
 })
 

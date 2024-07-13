@@ -145,7 +145,7 @@ const HomeView = () => {
 
                 <NoteShowBig />
 
-                {emailVerifyPage ? <EmailVerify /> : <EmailVerify />}
+                {emailVerifyPage ? <EmailVerify /> : ''}
 
             </div >
         </>

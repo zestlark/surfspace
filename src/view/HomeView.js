@@ -19,7 +19,7 @@ import SearchSuggestion from '../component/SearchSuggestion';
 import { openAuthPage, appAuthLogout } from '../app/reducers/appAuthReducer';
 import { auth } from '../app/firebase/config';
 import { appsetUser } from '../app/reducers/appAuthReducer';
-import { getSettingData, setSettingData } from '../app/reducers/appSettingReducer';
+import { getSettingData } from '../app/reducers/appSettingReducer';
 
 const HomeView = () => {
     const dispatch = useDispatch()
@@ -29,7 +29,7 @@ const HomeView = () => {
     const [SearchValue, setSearchValue] = useState('')
 
     const selectedSearchEngine = useSelector(state => state.appSearchEngine.selectedEngine)
-    const appAuthReducerUser = useSelector(state => state.appAuth.user)
+    //const appAuthReducerUser = useSelector(state => state.appAuth.user)
 
 
     const [noteSection, setnoteSection] = useState(false)

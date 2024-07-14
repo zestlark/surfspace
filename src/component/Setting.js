@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { searchEngine } from '../app/scripts/searchEngine';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSearchEngine } from '../app/reducers/appSearchEngineReducer';
@@ -6,7 +6,7 @@ import { changeSelectedBackgroundImageStyleName } from '../app/reducers/appSetti
 import Theme from './Theme';
 import { auth } from '../app/firebase/config';
 import avatarimage from '../app/scripts/avatar';
-import { setSettingData, getSettingData } from '../app/reducers/appSettingReducer';
+import { setSettingData } from '../app/reducers/appSettingReducer';
 
 const Setting = ({ closeSettingPage }) => {
     const dispatch = useDispatch()

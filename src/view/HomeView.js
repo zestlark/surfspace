@@ -105,7 +105,7 @@ const HomeView = () => {
                             {emailVerifyPage ?
                                 <button className='btn' onClick={handleopenauthform}>Login</button>
                                 :
-                                <button className='btn btn-error' onClick={handleappauhlogout}>logout</button>
+                                <button className='btn btn-outline btn-error' onClick={handleappauhlogout}>logout</button>
                             }
                         </span>
                     </header>

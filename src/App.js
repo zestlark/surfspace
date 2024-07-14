@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function App() {
-  const background = useSelector(state => state.appsetting.background)
-  const selectedBackgroundImageStyleName = useSelector(state => state.appsetting.selectedBackgroundImageStyleName)
+  const background = useSelector(state => state.appSetting.background)
+  const selectedBackgroundImageStyleName = useSelector(state => state.appSetting.selectedBackgroundImageStyleName || 'none')
   // console.log(background[selectedBackgroundImageStyleName]);
   useEffect(() => {
     if (selectedBackgroundImageStyleName !== 'none') {

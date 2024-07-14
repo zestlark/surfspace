@@ -14,7 +14,7 @@ export const store = configureStore({
         appNotes: appNotesReducer,
         appSearchEngine: appSearchEngineReducer,
         appTabs: appTabsReducer,
-        appsetting: appSettingReducer,
+        appSetting: appSettingReducer,
         appAuth: appAuthReducer,
     }
 })

@@ -1,4 +1,75 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { auth, database, dbref, dbset, dbget } from "../firebase/config";
+
+export const setSettingData = createAsyncThunk(
+    "setSettingData",
+    async (_, thunkAPI) => {
+        try {
+            const userId = auth?.currentUser?.uid;
+
+            if (!userId) {
+                throw new Error("User not authenticated");
+            }
+            const background = thunkAPI.getState().appSetting.selectedBackgroundImageStyleName;
+            const settingsRef = dbref(database, `surfspace/users/${userId}/settings/background`);
+            await dbset(settingsRef, background);
+            return true;
+        } catch (error) {
+            console.error("Failed to save settings to Firebase:", error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+export const getSettingData = createAsyncThunk(
+    "getSettingData",
+    async (_, thunkAPI) => {
+        try {
+            const userId = auth?.currentUser?.uid;
+
+            if (!userId) {
+                throw new Error("User not authenticated");
+            }
+
+            const settingsRefBackground = dbref(database, `surfspace/users/${userId}/settings/background`);
+            const settingsRefTheme = dbref(database, `surfspace/users/${userId}/settings/theme`);
+
+            const snapshotBackground = await dbget(settingsRefBackground);
+            const background = snapshotBackground.exists() ? snapshotBackground.val() : null;
+
+            const snapshotTheme = await dbget(settingsRefTheme);
+            const theme = snapshotTheme.exists() ? snapshotTheme.val() : 'light'; // Default theme if not found
+
+            const data = {
+                background,
+                theme
+            };
+
+            return data;
+        } catch (error) {
+            console.error("Failed to get settings from Firebase:", error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+export const saveTheme = createAsyncThunk(
+    "saveTheme",
+    async (theme, thunkAPI) => {
+        try {
+            const userId = auth?.currentUser?.uid;
+            if (!userId) {
+                throw new Error("User not authenticated");
+            }
+            const settingsRef = dbref(database, `surfspace/users/${userId}/settings/theme`);
+            await dbset(settingsRef, theme);
+            return theme;
+        } catch (error) {
+            console.error("Failed to save theme to Firebase:", error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
 
 export const appSetting = createSlice({
     name: 'setting',
@@ -23,21 +94,44 @@ export const appSetting = createSlice({
                 BodyImageUrl: 'https://images.pexels.com/photos/1353938/pexels-photo-1353938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             }
         },
-        selectedBackgroundImageStyleName: 'none'
+        selectedBackgroundImageStyleName: 'none',
+        theme: 'light'
     },
     reducers: {
-        setLocation: (state, actions) => {
-            state.location.country = actions.payload.country
-            state.location.timezone = actions.payload.timezone
-            state.location.regionName = actions.payload.regionName
-            state.location.countryCode = actions.payload.countryCode
+        setLocation: (state, action) => {
+            state.location = action.payload;
         },
-        changeSelectedBackgroundImageStyleName: (state, actions) => {
-            state.selectedBackgroundImageStyleName = actions.payload
+        changeSelectedBackgroundImageStyleName: (state, action) => {
+            state.selectedBackgroundImageStyleName = action.payload;
+        },
+        setTheme: (state, action) => {
+            state.theme = action.payload;
         }
-    }
-})
+    },
+    extraReducers: (builder) => {
+        builder.addCase(setSettingData.fulfilled, (state, action) => {
+            // Handle fulfilled state if needed
+        });
+        builder.addCase(setSettingData.rejected, (state, action) => {
+            // Handle rejected state if needed
+            console.error("Error saving settings:", action.payload);
+        });
+        builder.addCase(getSettingData.fulfilled, (state, action) => {
+            state.selectedBackgroundImageStyleName = action.payload.background;
+            state.theme = action.payload.theme;
+        });
+        builder.addCase(getSettingData.rejected, (state, action) => {
+            state.selectedBackgroundImageStyleName = 'none';
+        });
+        builder.addCase(saveTheme.fulfilled, (state, action) => {
+            console.log('Theme saved successfully:', action.payload);
+        });
+        builder.addCase(saveTheme.rejected, (state, action) => {
+            console.error('Failed to save theme:', action.payload);
+        });
+    },
+});
 
-export const { setLocation, changeSelectedBackgroundImageStyleName } = appSetting.actions;
+export const { setLocation, changeSelectedBackgroundImageStyleName, setTheme } = appSetting.actions;
 
 export default appSetting.reducer;

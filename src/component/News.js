@@ -4,30 +4,30 @@ import { useSelector } from 'react-redux';
 
 const News = () => {
     const [newsdata, setnewsdata] = useState([]);
-    const countryCode = useSelector(state => state.appsetting.location.countryCode)
+    const location = useSelector(state => state.appSetting.location || {});
+    const countryCode = location.countryCode;
     useEffect(() => {
         if (countryCode) {
-            const sessionnewsdata = sessionStorage.getItem(btoa('newsdata' + countryCode))
+            const sessionnewsdata = sessionStorage.getItem(btoa('newsdata' + countryCode));
             if (sessionnewsdata) {
-                setnewsdata(JSON.parse(sessionnewsdata))
-                return
-            }
-            const fetchnewsData = async () => {
-                //alternate key d5d28d52b0bb46c6ad00604982c11c1c
-                const newsData = await fetch(`https://newsdata.io/api/1/news?apikey=pub_473389f15a890a0ce83a56ef0464a1761ca69&country=${countryCode.toLowerCase()}&language=en`)
-                const jsondata = await newsData.json()
-                console.log(jsondata);
-                if (jsondata.status === 'success') {
-                    setnewsdata(jsondata.results)
-                    sessionStorage.setItem(btoa('newsdata' + countryCode), JSON.stringify(jsondata.results))
-                } else {
-                    setnewsdata([])
-                }
+                setnewsdata(JSON.parse(sessionnewsdata));
+                return;
             }
 
-            fetchnewsData()
+            const fetchnewsData = async () => {
+                const newsData = await fetch(`https://newsdata.io/api/1/news?apikey=pub_473389f15a890a0ce83a56ef0464a1761ca69&country=${countryCode.toLowerCase()}&language=en`);
+                const jsondata = await newsData.json();
+                if (jsondata.status === 'success') {
+                    setnewsdata(jsondata.results);
+                    sessionStorage.setItem(btoa('newsdata' + countryCode), JSON.stringify(jsondata.results));
+                } else {
+                    setnewsdata([]);
+                }
+            };
+
+            fetchnewsData();
         }
-    }, [countryCode])
+    }, [countryCode]);
     return (
         <div className='mt-4'>
             <p className='px-1'><small>News</small></p>

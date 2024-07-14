@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth } from '../firebase/config';
+import { setSettingData } from "./appSettingReducer";
 import {
     createUserWithEmailAndPassword,
     sendEmailVerification,
@@ -15,6 +16,7 @@ export const appAuthSignup = createAsyncThunk('appAuthSignup',
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             await updateProfile(userCredential.user, { displayName: name, photoURL: photoURL });
             await sendEmailVerification(userCredential.user);
+            await thunkAPI.dispatch(setSettingData());
             return { email: userCredential.user.email };
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -85,6 +87,9 @@ export const appAuth = createSlice({
             if (state.user !== null)
                 state.authPage = false;
         },
+        appsetUser: (state, action) => {
+            state.user = action.payload;
+        },
         validate: (state, action) => {
             const { name, email, password } = action.payload;
             const nameRegex = /^[a-zA-Z\s]+$/;
@@ -147,6 +152,6 @@ export const appAuth = createSlice({
     }
 });
 
-export const { openAuthPage, closeAuthPage, validate } = appAuth.actions;
+export const { openAuthPage, closeAuthPage, validate, appsetUser } = appAuth.actions;
 
 export default appAuth.reducer;

@@ -37,7 +37,7 @@ const Weather = () => {
                     setWeather(res);
                 }
             } catch (err) {
-                hasFetchedWeather(false)
+                hasFetchedWeather.current = false
             }
 
             // console.log(res);

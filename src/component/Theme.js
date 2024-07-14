@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTheme, saveTheme } from '../app/reducers/appSettingReducer';
 
 const Theme = () => {
-    const [theme, setTheme] = useState(sessionStorage.getItem('theme') || 'light');
+    const dispatch = useDispatch();
+    const theme = useSelector(state => state.appSetting.theme);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
-        document.documentElement.classList.remove(theme);
+        document.documentElement.classList.remove('light', 'dark');
         document.documentElement.classList.add(theme);
-        sessionStorage.setItem('theme', theme);
     }, [theme]);
 
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
-        document.documentElement.classList.remove(theme);
-        document.documentElement.classList.add(newTheme);
-        setTheme(newTheme);
-
-        // console.log(document.documentElement.classList);
-        // console.log(theme);
+        dispatch(setTheme(newTheme));
+        dispatch(saveTheme(newTheme));
     };
 
     return (

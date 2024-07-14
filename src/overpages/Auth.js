@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeAuthPage, validate, appAuthSignup, appAuthLogin } from '../app/reducers/appAuthReducer';
 import avatarimage from '../app/scripts/avatar'
-// import { auth } from '../app/firebase/config';
 
 const Auth = () => {
     const dispatch = useDispatch();

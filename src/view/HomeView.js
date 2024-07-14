@@ -18,6 +18,8 @@ import NoteShowBig from '../overpages/NoteShowBig';
 import SearchSuggestion from '../component/SearchSuggestion';
 import { openAuthPage, appAuthLogout } from '../app/reducers/appAuthReducer';
 import { auth } from '../app/firebase/config';
+import { appsetUser } from '../app/reducers/appAuthReducer';
+import { getSettingData, setSettingData } from '../app/reducers/appSettingReducer';
 
 const HomeView = () => {
     const dispatch = useDispatch()
@@ -27,6 +29,8 @@ const HomeView = () => {
     const [SearchValue, setSearchValue] = useState('')
 
     const selectedSearchEngine = useSelector(state => state.appSearchEngine.selectedEngine)
+    const appAuthReducerUser = useSelector(state => state.appAuth.user)
+
 
     const [noteSection, setnoteSection] = useState(false)
     const [settingSection, setsettingSection] = useState(false)
@@ -76,7 +80,10 @@ const HomeView = () => {
             } else if (!user.emailVerified) {
                 setemailVerifyPage(true);
             } else {
+                const { email, uid, photoURL, displayName, emailVerified, accessToken } = user
+                dispatch(appsetUser({ email, uid, photoURL, displayName, emailVerified, accessToken }))
                 setemailVerifyPage(false);
+                dispatch(getSettingData())
             }
         });
         return () => unsubscribe();

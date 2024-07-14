@@ -83,6 +83,11 @@
         animation: slide-bottom 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
 
+
+    .slide-in {
+        animation: slideIn 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
     .slide-none {
         -webkit-animation: none;
         animation: none;
@@ -138,5 +143,17 @@
         -webkit-transform: translateY(100vh);
         transform: translateY(100vh);
         display: none;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
 }

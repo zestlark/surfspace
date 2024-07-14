@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { colorcode } from '../app/scripts/colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTab, updateTab, apptabsGet } from '../app/reducers/appTabsReducer';
+import { addTab, updateTab } from '../app/reducers/appTabsReducer';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 
 const Tabs = () => {

@@ -16,7 +16,7 @@ import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { addAppHistory } from '../app/reducers/appHistoryReducer';
 import NoteShowBig from '../overpages/NoteShowBig';
 import SearchSuggestion from '../component/SearchSuggestion';
-import { openAuthPage } from '../app/reducers/appAuthReducer';
+import { openAuthPage, appAuthLogout } from '../app/reducers/appAuthReducer';
 import { auth } from '../app/firebase/config';
 
 const HomeView = () => {
@@ -65,17 +65,22 @@ const HomeView = () => {
         dispatch(openAuthPage())
     }
 
+    const handleappauhlogout = () => {
+        dispatch(appAuthLogout())
+    }
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
-            if (user.emailVerified) {
-                setemailVerifyPage(false);
-                console.log(user);
-            } else {
+            if (!user) {
+                dispatch(openAuthPage());
+            } else if (!user.emailVerified) {
                 setemailVerifyPage(true);
+            } else {
+                setemailVerifyPage(false);
             }
         });
         return () => unsubscribe();
-    }, []);
+    }, [dispatch]);
 
     return (
         <>
@@ -97,8 +102,11 @@ const HomeView = () => {
                             </label>
 
                             <Theme />
-
-                            <button className='btn' onClick={handleopenauthform}>Login</button>
+                            {emailVerifyPage ?
+                                <button className='btn' onClick={handleopenauthform}>Login</button>
+                                :
+                                <button className='btn btn-error' onClick={handleappauhlogout}>logout</button>
+                            }
                         </span>
                     </header>
 

@@ -5,6 +5,7 @@ import { changeSearchEngine } from '../app/reducers/appSearchEngineReducer';
 import { changeSelectedBackgroundImageStyleName } from '../app/reducers/appSettingReducer';
 import Theme from './Theme';
 import { auth } from '../app/firebase/config';
+import avatarimage from '../app/scripts/avatar';
 
 const Setting = ({ closeSettingPage }) => {
     const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const Setting = ({ closeSettingPage }) => {
             <div className='p-3 pb-5'>
                 <div className='flex items-center justify-between mt-4 mb-2'>
                     <div className='flex items-center justify-start gap-2'>
-                        <img className='w-16 rounded-full border-2 border-red-400 p-[2px]' src='https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=338&ext=jpg&ga=GA1.1.2116175301.1719360000&semt=ais_user' alt='' />
+                        <img className='w-16 bg-slate-200 dark:bg-slate-600 rounded-full border-2 border-black dark:border-white p-[2px]' src={auth?.currentUser?.photoURL || avatarimage[5]} alt='' />
                         <div className='leading-5'>
                             <p>{auth?.currentUser?.displayName}</p>
                             <p><small>{auth?.currentUser?.email}</small></p>

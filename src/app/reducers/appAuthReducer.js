@@ -5,14 +5,15 @@ import {
     sendEmailVerification,
     signInWithEmailAndPassword,
     updateProfile,
+    signOut
 } from "firebase/auth";
 
 // Async thunk for signup
 export const appAuthSignup = createAsyncThunk('appAuthSignup',
-    async ({ name, email, password }, thunkAPI) => {
+    async ({ name, photoURL, email, password }, thunkAPI) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await updateProfile(userCredential.user, { displayName: name });
+            await updateProfile(userCredential.user, { displayName: name, photoURL: photoURL });
             await sendEmailVerification(userCredential.user);
             return { email: userCredential.user.email };
         } catch (error) {
@@ -33,6 +34,35 @@ export const appAuthLogin = createAsyncThunk('appAuthLogin',
     }
 );
 
+// Async thunk for resending email verification
+export const appAuthResendMail = createAsyncThunk('appAuthResendMail',
+    async (_, thunkAPI) => {
+        try {
+            const user = auth.currentUser;
+            if (user) {
+                await sendEmailVerification(user);
+                return { email: user.email };
+            } else {
+                throw new Error("No authenticated user found.");
+            }
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+// Async thunk for logout
+export const appAuthLogout = createAsyncThunk('appAuthLogout',
+    async (_, thunkAPI) => {
+        try {
+            await signOut(auth);
+            return {};
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
 // Redux slice for appAuth
 export const appAuth = createSlice({
     name: 'appAuth',
@@ -43,14 +73,17 @@ export const appAuth = createSlice({
         signupError: '',
         loginStatus: '',
         loginError: '',
-        user: null, // Add user state to store user data
+        resendMailStatus: '', // Added state for resend mail status
+        resendMailError: '', // Added state for resend mail error
+        user: null, // State to store user data
     },
     reducers: {
         openAuthPage: (state) => {
             state.authPage = true;
         },
         closeAuthPage: (state) => {
-            state.authPage = false;
+            if (state.user !== null)
+                state.authPage = false;
         },
         validate: (state, action) => {
             const { name, email, password } = action.payload;
@@ -97,6 +130,19 @@ export const appAuth = createSlice({
             .addCase(appAuthLogin.rejected, (state, action) => {
                 state.loginStatus = 'failed';
                 state.loginError = action.payload;
+            })
+            // Resend email verification reducers
+            .addCase(appAuthResendMail.pending, (state) => {
+                state.resendMailStatus = 'sending';
+                state.resendMailError = null;
+            })
+            .addCase(appAuthResendMail.fulfilled, (state, action) => {
+                state.resendMailStatus = 'succeeded';
+                // Optionally set a message indicating success
+            })
+            .addCase(appAuthResendMail.rejected, (state, action) => {
+                state.resendMailStatus = 'failed';
+                state.resendMailError = action.payload;
             });
     }
 });

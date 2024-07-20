@@ -17,7 +17,7 @@ import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
 import { saveAppHistory, getAllHistory } from '../app/reducers/appHistoryReducer';
 import NoteShowBig from '../overpages/NoteShowBig';
 import SearchSuggestion from '../component/SearchSuggestion';
-import { openAuthPage, appAuthLogout } from '../app/reducers/appAuthReducer';
+import { openAuthPage } from '../app/reducers/appAuthReducer';
 import { auth } from '../app/firebase/config';
 import { appsetUser } from '../app/reducers/appAuthReducer';
 import { getSettingData } from '../app/reducers/appSettingReducer';
@@ -69,13 +69,7 @@ const HomeView = () => {
         setSearchValue(data)
     }
 
-    const handleopenauthform = () => {
-        dispatch(openAuthPage())
-    }
 
-    const handleappauhlogout = () => {
-        dispatch(appAuthLogout())
-    }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {

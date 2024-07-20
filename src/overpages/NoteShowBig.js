@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotesBig } from '../app/reducers/appNotesReducer';
-import { deleteNote, addNotes, saveNote } from '../app/reducers/appNotesReducer';
+import { deleteNote, saveNote } from '../app/reducers/appNotesReducer';
 import { appconfirm } from '../app/reducers/overpagesReducer';
 import moment from 'moment';
 

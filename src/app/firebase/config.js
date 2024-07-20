@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref as dbref, set as dbset, get as dbget, onValue as dbOnValue } from "firebase/database";
+import { getDatabase, ref as dbref, set as dbset, get as dbget, onValue as dbOnValue, remove as dbremove } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -26,4 +26,4 @@ const database = getDatabase(app);
 const auth = getAuth(app);
 
 
-export { database, dbref, dbset, dbget, dbOnValue, analytics, auth };
+export { database, dbref, dbset, dbget, dbOnValue, dbremove, analytics, auth };

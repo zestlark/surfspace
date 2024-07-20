@@ -7,6 +7,8 @@ import Theme from './Theme';
 import { auth } from '../app/firebase/config';
 import avatarimage from '../app/scripts/avatar';
 import { setSettingData } from '../app/reducers/appSettingReducer';
+import { saveSearchEngine } from '../app/reducers/appSearchEngineReducer';
+import { appAuthLogout } from '../app/reducers/appAuthReducer'
 
 const Setting = ({ closeSettingPage }) => {
     const dispatch = useDispatch()
@@ -18,6 +20,7 @@ const Setting = ({ closeSettingPage }) => {
 
     const handleSearchEngineChange = (e) => {
         dispatch(changeSearchEngine(e.target.value))
+        dispatch(saveSearchEngine())
     }
 
     const handleBackgroundChange = (key) => {
@@ -25,11 +28,15 @@ const Setting = ({ closeSettingPage }) => {
         dispatch(setSettingData())
     }
 
+    const handleappauhlogout = () => {
+        dispatch(appAuthLogout())
+    }
+
     return (
         <div onClick={(e) => e.stopPropagation()} className='w-[100%] md:w-[350px] bg-white dark:bg-slate-800 min-h-[350px] max-h-[100%] md:max-h-[550px] overflow-scroll md:rounded-2xl  no-scrollbar slide-top'>
             <p className='p-3 bg-white dark:bg-slate-800 sticky top-0 flex justify-start items-center gap-3 z-20'><i onClick={closeSettingPage} className="ri-arrow-left-s-line text-2xl bg-slate-100 dark:bg-slate-900 w-9 h-9 flex justify-center items-center rounded-full"></i> Setting</p>
             <div className='p-3 pb-5'>
-                <div className='flex items-center justify-between mt-4 mb-2'>
+                <div className='flex items-center justify-between mt-0 mb-2'>
                     <div className='flex items-center justify-start gap-2'>
                         <img className='w-16 bg-slate-200 dark:bg-slate-600 rounded-full border-2 border-black dark:border-white p-[2px]' src={auth?.currentUser?.photoURL || avatarimage[5]} alt='' />
                         <div className='leading-5'>
@@ -80,6 +87,10 @@ const Setting = ({ closeSettingPage }) => {
                     <div className='bg-slate-50 dark:bg-slate-900 px-3 py-3 mt-3 rounded-lg flex flex-col gap-4'>
                         <div className='flex justify-between items-center '><p className='text-[14px]'>Country</p> <span className='opacity-70 text-[14px]'>{location.country}</span></div>
                         <div className='flex justify-between items-center '><p className='text-[14px]'>Timezone</p> <span className='opacity-70 text-[14px]'>{location.timezone}</span></div>
+                    </div>
+
+                    <div className='border bg-[#ff000022] border-red-400 cursor-pointer text-red-400  px-3 py-2 mt-3 rounded-lg flex flex-col gap-4'>
+                        <div onClick={handleappauhlogout} className='flex justify-between items-center '><p className='text-[14px]'>Logout</p> <span className='opacity-70 text-[18px]'><i className="ri-logout-circle-r-line"></i></span></div>
                     </div>
                 </div>
 

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotesBig } from '../app/reducers/appNotesReducer';
-import { deletenotes, addNotes } from '../app/reducers/appNotesReducer';
+import { deleteNote, addNotes, saveNote } from '../app/reducers/appNotesReducer';
 import { appconfirm } from '../app/reducers/overpagesReducer';
 import moment from 'moment';
 
@@ -26,7 +26,7 @@ const NoteShowBig = () => {
         dispatch(appconfirm({
             message: "Do you want to delete this note",
             confirmFunction: function () {
-                dispatch(deletenotes(id))
+                dispatch(deleteNote(id))
                 dispatch(showNotesBig(false, '', {}))
             }
         }))
@@ -35,7 +35,8 @@ const NoteShowBig = () => {
     const handlenewNote = () => {
         if (newnotevalue.length > 0) {
             const data = newnotevalue
-            dispatch(addNotes(data))
+            //dispatch(addNotes(data))
+            dispatch(saveNote(data))
             document.getElementById('bigNoteBox').click()
             setnewnotevalue('')
         }
@@ -75,11 +76,11 @@ const NoteShowBig = () => {
 
 
                         {isnewNote ?
-                            <div className='btn w-full mt-5 bg-white' onClick={() => { handlenewNote() }}>
+                            <div className='btn w-full border-none mt-5 bg-white' onClick={() => { handlenewNote() }}>
                                 Save
                             </div>
                             :
-                            <button className="btn bg-[#ffffff66] dark:bg-[#66666666]" onClick={() => { handleNoteDelete(noteSBigShowData?.id) }}>
+                            <button className="btn border-none bg-transparent hover:bg-transparent shadow-none hover:scale-[1.1]" onClick={() => { handleNoteDelete(noteSBigShowData?.id) }}>
                                 <i className="ri-delete-bin-line text-xl text-error"></i>
                             </button>
                         }

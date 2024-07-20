@@ -1,95 +1,133 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { database, dbref, dbOnValue } from '../firebase/config'
+import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
+import { database, dbref, dbset, dbget, auth, dbremove } from '../firebase/config';
 
+// Thunk to add a tab and save it to the database
+export const addTab = createAsyncThunk(
+    'appTabs/addTab',
+    async (tab, thunkAPI) => {
+        try {
+            const userId = auth?.currentUser?.uid; // Get the current user ID
+            if (!userId) throw new Error("User not authenticated");
 
-export const apptabsGet = createAsyncThunk('appTabsGet', async () => {
-    const databaseRef = dbref(database, 'temp');
-    dbOnValue(databaseRef, async (snapshot) => {
-        const data = await snapshot.val();
-        console.log(data);
-    });
-})
+            // Ensure to invoke nanoid as a function to generate a unique ID
+            const newtabobj = { id: nanoid(), url: tab.url, title: tab.title, icon: tab.icon };
+            const newTabRef = dbref(database, `surfspace/users/${userId}/tabs/${newtabobj.id}`);
+            await dbset(newTabRef, newtabobj);
+
+            return newtabobj; // Return the tab object to update the state
+        } catch (error) {
+            console.error("Failed to add tab:", error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+// Thunk to get all tabs from the database
+export const getAllTabs = createAsyncThunk(
+    'appTabs/getAllTabs',
+    async (_, thunkAPI) => {
+        try {
+            const userId = auth?.currentUser?.uid; // Get the current user ID
+            if (!userId) throw new Error("User not authenticated");
+
+            const tabsRef = dbref(database, `surfspace/users/${userId}/tabs/`);
+            const snapshot = await dbget(tabsRef);
+            const data = snapshot.val();
+
+            return data ? Object.values(data) : []; // Convert object to array
+        } catch (error) {
+            console.error("Failed to get tabs:", error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+// Thunk to update a tab in the database
+export const updateTab = createAsyncThunk(
+    'appTabs/updateTab',
+    async (tab, thunkAPI) => {
+        try {
+            const userId = auth?.currentUser?.uid; // Get the current user ID
+            if (!userId) throw new Error("User not authenticated");
+
+            const tabRef = dbref(database, `surfspace/users/${userId}/tabs/${tab.id}`);
+            await dbset(tabRef, tab);
+
+            return tab; // Return the updated tab object to update the state
+        } catch (error) {
+            console.error("Failed to update tab:", error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+export const deleteTab = createAsyncThunk(
+    'appTabs/deleteTab',
+    async (tabId, thunkAPI) => {
+        try {
+            const userId = auth?.currentUser?.uid; // Get the current user ID
+            if (!userId) throw new Error("User not authenticated");
+
+            const tabRef = dbref(database, `surfspace/users/${userId}/tabs/${tabId}`);
+            await dbremove(tabRef);
+
+            return tabId; // Return the deleted tab ID to update the state
+        } catch (error) {
+            console.error("Failed to delete tab:", error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
 
 export const apptabs = createSlice({
     name: 'apptabs',
     initialState: {
-        tabs: [
-            {
-                "url": "https://www.google.com",
-                "title": "Google",
-                "icon": "https://www.google.com/favicon.ico"
-            },
-            {
-                "url": "https://www.apple.com",
-                "title": "Apple",
-                "icon": "https://www.apple.com/favicon.ico"
-            },
-            {
-                "url": "https://www.microsoft.com",
-                "title": "Microsoft",
-                "icon": "https://www.microsoft.com/favicon.ico"
-            },
-            {
-                "url": "https://www.amazon.com",
-                "title": "Amazon",
-                "icon": "https://www.amazon.com/favicon.ico"
-            },
-            {
-                "url": "https://www.facebook.com",
-                "title": "Facebook",
-                "icon": "https://www.facebook.com/favicon.ico"
-            },
-            {
-                "url": "https://www.youtube.com",
-                "title": "YouTube",
-                "icon": "https://www.youtube.com/favicon.ico"
-            },
-            {
-                "url": "https://www.wikipedia.org",
-                "title": "Wikipedia",
-                "icon": "https://www.wikipedia.org/static/favicon/wikipedia.ico"
-            },
-            {
-                "url": "https://www.reddit.com",
-                "title": "Reddit",
-                "icon": "https://www.reddit.com/favicon.ico"
-            },
-            {
-                "url": "https://x.com",
-                "title": "Twitter",
-                "icon": "https://x.com/favicon.ico"
-            },
-            {
-                "url": "https://www.instagram.com",
-                "title": "Instagram",
-                "icon": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://instagram.com&size=256"
-            }
-        ],
+        tabs: [],
+        newtabpage: false,
         loaded: false,
     },
     reducers: {
-        addTab: (state, action) => {
-            state.tabs.unshift({
-                "url": action.payload.url,
-                "title": action.payload.title,
-                "icon": action.payload.icon
-            });
+        opennewtabpage: (state) => {
+            state.newtabpage = true;
         },
-        updateTab: (state, action) => {
-            state.tabs[action.payload.id] = { url: action.payload.url, title: action.payload.title, icon: action.payload.icon }
+        closenewtabpage: (state) => {
+            state.newtabpage = false;
         },
-
-        removeTab: (state, action) => {
-            state.tabs.splice(action.payload, 1);
-        }
     },
     extraReducers: (builder) => {
-        builder.addCase(apptabsGet.fulfilled, (state, action) => {
-            state.loaded = true
-        })
-    }
-})
+        builder
+            .addCase(addTab.fulfilled, (state, action) => {
+                state.tabs.push(action.payload);
+            })
+            .addCase(addTab.rejected, (state, action) => {
+                console.error("Error adding tab:", action.payload);
+            })
+            .addCase(getAllTabs.fulfilled, (state, action) => {
+                state.tabs = action.payload;
+                state.loaded = true;
+            })
+            .addCase(getAllTabs.rejected, (state, action) => {
+                console.error("Error fetching tabs:", action.payload);
+            })
+            .addCase(updateTab.fulfilled, (state, action) => {
+                const index = state.tabs.findIndex(tab => tab.id === action.payload.id);
+                if (index !== -1) {
+                    state.tabs[index] = action.payload;
+                }
+            })
+            .addCase(updateTab.rejected, (state, action) => {
+                console.error("Error updating tab:", action.payload);
+            })
+            .addCase(deleteTab.fulfilled, (state, action) => {
+                state.tabs = state.tabs.filter(tab => tab.id !== action.payload);
+            })
+            .addCase(deleteTab.rejected, (state, action) => {
+                console.error("Error deleting tab:", action.payload);
+            });
 
-export const { addTab, removeTab, updateTab } = apptabs.actions
+    }
+});
+
+export const { opennewtabpage, closenewtabpage } = apptabs.actions;
 
 export default apptabs.reducer;

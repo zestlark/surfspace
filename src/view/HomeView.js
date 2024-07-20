@@ -11,15 +11,19 @@ import News from '../component/News';
 import ZBlog from '../component/ZBlog';
 import Setting from '../component/Setting';
 import EmailVerify from '../overpages/EmailVerify';
+import NewTabPage from '../overpages/NewTabPage';
 // import { swipeEventUpDown } from '../app/scripts/swipeEvent';
 import { searchPreProcess } from '../app/reducers/appSearchEngineReducer';
-import { addAppHistory } from '../app/reducers/appHistoryReducer';
+import { saveAppHistory, getAllHistory } from '../app/reducers/appHistoryReducer';
 import NoteShowBig from '../overpages/NoteShowBig';
 import SearchSuggestion from '../component/SearchSuggestion';
 import { openAuthPage, appAuthLogout } from '../app/reducers/appAuthReducer';
 import { auth } from '../app/firebase/config';
 import { appsetUser } from '../app/reducers/appAuthReducer';
 import { getSettingData } from '../app/reducers/appSettingReducer';
+import { getSearchEngine } from '../app/reducers/appSearchEngineReducer';
+import { getAllNotes } from '../app/reducers/appNotesReducer.js'
+import { getAllTabs } from '../app/reducers/appTabsReducer.js'
 
 const HomeView = () => {
     const dispatch = useDispatch()
@@ -41,7 +45,7 @@ const HomeView = () => {
 
     const searchToData = async () => {
         if (SearchValue.length !== 0) {
-            dispatch(addAppHistory(SearchValue))
+            dispatch(saveAppHistory(SearchValue))
             dispatch(searchPreProcess(SearchValue))
         }
     }
@@ -83,7 +87,13 @@ const HomeView = () => {
                 const { email, uid, photoURL, displayName, emailVerified, accessToken } = user
                 dispatch(appsetUser({ email, uid, photoURL, displayName, emailVerified, accessToken }))
                 setemailVerifyPage(false);
+
+                // database calls
                 dispatch(getSettingData())
+                dispatch(getSearchEngine());
+                dispatch(getAllNotes())
+                dispatch(getAllHistory())
+                dispatch(getAllTabs())
             }
         });
         return () => unsubscribe();
@@ -97,6 +107,8 @@ const HomeView = () => {
                         <h1 className='text-xl'>Surf Space</h1>
                         <span className='flex items-center gap-2'>
 
+                            <Theme />
+
                             <label className="swap swap-rotate text-xl bg-slate-100 dark:bg-slate-700 w-8 h-8 rounded-full  md:hidden">
                                 <i className={`${noteSection ? 'ri-sticky-note-fill' : 'ri-sticky-note-line'}`}
                                     onClick={() => setnoteSection(!noteSection)}></i>
@@ -108,12 +120,6 @@ const HomeView = () => {
                                     onClick={() => setsettingSection(!settingSection)}></i>
                             </label>
 
-                            <Theme />
-                            {emailVerifyPage ?
-                                <button className='btn' onClick={handleopenauthform}>Login</button>
-                                :
-                                <button className='btn btn-outline btn-error' onClick={handleappauhlogout}>logout</button>
-                            }
                         </span>
                     </header>
 
@@ -129,7 +135,7 @@ const HomeView = () => {
                     </div>
 
                     <div className='SearchBox bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
-                        <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer rounded-full' src={selectedSearchEngine.image} alt='' />
+                        <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer rounded-full' src={selectedSearchEngine?.image} alt='' />
                         <input id='search' autoComplete="off" onFocus={handleInpputFocus} onChange={e => setSearchValue(e.target.value)} value={SearchValue} onKeyDown={handleenterSearch} className='p-3 pl-3 lg:pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
                         <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
                     </div>
@@ -159,6 +165,7 @@ const HomeView = () => {
                 </div> : ''}
 
                 <NoteShowBig />
+                <NewTabPage />
 
                 {emailVerifyPage ? <EmailVerify /> : ''}
 

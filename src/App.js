@@ -21,7 +21,7 @@ function App() {
   }, [selectedBackgroundImageStyleName, background])
 
   return (
-    <div className={`App min-h-screen ${selectedBackgroundImageStyleName !== 'none' ? 'bg-[#ffffff88] dark:bg-[#000000aa]' : ''}`}>
+    <div className={`App pb-1 min-h-screen ${selectedBackgroundImageStyleName !== 'none' ? 'bg-[#ffffff88] dark:bg-[#000000aa]' : ''}`}>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Home />} />

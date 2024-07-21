@@ -25,7 +25,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/:auth" element={<Home />} />
+          <Route exact path="/:page" element={<Home />} />
+          {/* <Route exact path="/:auth" element={<Home />} /> */}
           <Route exact path="*" element={<h1>404</h1>} />
         </Routes>
       </BrowserRouter>

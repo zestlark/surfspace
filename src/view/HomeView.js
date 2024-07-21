@@ -25,9 +25,12 @@ import { getSearchEngine } from '../app/reducers/appSearchEngineReducer';
 import { getAllNotes } from '../app/reducers/appNotesReducer.js'
 import { getAllTabs } from '../app/reducers/appTabsReducer.js'
 import Loading from '../overpages/Loading.js';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const HomeView = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { page } = useParams();
 
     const [loadingstages, setloadingstages] = useState({ loading: false, loadingmessage: 'tabs' });
 
@@ -116,6 +119,18 @@ const HomeView = () => {
         fetchData();
     }, [dispatch]);
 
+    useEffect(() => {
+        if (page === 'setting') {
+            setsettingSection(true);
+        } else if (page === 'notes') {
+            setnoteSection(true);
+        }
+        else {
+            setsettingSection(false);
+            setnoteSection(false);
+        }
+    }, [page]);
+
     return (
         <>
             <div className='max-w-[1200px] mx-auto px-3 md:flex gap-5'>
@@ -128,13 +143,13 @@ const HomeView = () => {
 
                             <label className="swap swap-rotate text-xl bg-slate-100 dark:bg-slate-700 w-8 h-8 rounded-full  md:hidden">
                                 <i className={`${noteSection ? 'ri-sticky-note-fill' : 'ri-sticky-note-line'}`}
-                                    onClick={() => setnoteSection(!noteSection)}></i>
+                                    onClick={() => navigate('/notes')}></i>
                             </label>
 
                             <label className="swap swap-rotate text-xl bg-slate-100 dark:bg-slate-700 w-8 h-8 rounded-full">
                                 <i className="ri-settings-line"></i>
                                 <i className={`${settingSection ? 'ri-settings-fill' : 'ri-settings-line'}`}
-                                    onClick={() => setsettingSection(!settingSection)}></i>
+                                    onClick={() => navigate('/setting')}></i>
                             </label>
 
                         </span>
@@ -171,14 +186,14 @@ const HomeView = () => {
 
                 <div className='w-full md:w-auto md:min-w-[350px] md:max-w-[350px]'>
                     <div id='notesBox' className={`z-30 pb-4 pt-2 px-4 md:px-3 md:pt-2 mt-5 md:mt-0 fixed left-0 w-full md:static md:w-auto md:min-w-[350px] md:max-w-[350px] bg-white dark:bg-slate-800 md:bg-transparent dark:md:bg-transparent h-[100%] md:h-auto md:rounded-t-2xl ${noteSection ? 'block bottom-0 slide-top md:slide-none' : 'md:block transition-all slide-bottom md:slide-none'}`}>
-                        <Notes closeNotesPage={() => { setnoteSection(false) }} />
+                        <Notes closeNotesPage={() => { navigate('/') }} />
                     </div>
 
                     <ZBlog />
                 </div>
 
                 {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-30 flex justify-center items-end md:items-center md:backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
-                    <Setting closeSettingPage={() => { setsettingSection(false) }} />
+                    <Setting closeSettingPage={() => { navigate('/') }} />
                 </div> : ''}
 
                 <NoteShowBig />

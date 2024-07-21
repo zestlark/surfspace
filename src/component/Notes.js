@@ -28,7 +28,7 @@ const Notes = ({ closeNotesPage }) => {
 
                 <div className='flex gap-3 justify-between items-stretch flex-wrap mt-3 overflow-scroll max-h-[100%] no-scrollbar'>
                     {appNotes.length !== 8 ?
-                        <div className='min-w-[48%] max-w-[48%] border-2 bg-[#E9E4FC] cursor-pointer text-slate-500 backdrop-blur-lg text-2xl rounded-2xl flex justify-center items-center' onClick={handleNewNote}>+</div>
+                        <div className='min-w-[48%] min-h-[100px] max-w-[48%] border-2 bg-[#E9E4FC] cursor-pointer text-slate-500 backdrop-blur-lg text-2xl rounded-2xl flex justify-center flex-col items-center' onClick={handleNewNote}>+</div>
                         : ''
                     }
 

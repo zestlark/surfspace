@@ -7,8 +7,9 @@ function NewTabPage() {
     const dispatch = useDispatch();  // Fixed useDispatch initialization
     const [taburl, settaburl] = useState('');  // Initialized with an empty string
     const [tabSavingProcess, settabSavingProcess] = useState(false);
-    const [tabimage, settabimage] = useState('https://i.gifer.com/ZKZg.gif');
-    const [tabtitle, settabtitle] = useState('Not Available');
+    const defaultValueImage = 'https://media.tenor.com/CrhrU7ebGucAAAAj/unless-you-include-this.gif'
+    const [tabimage, settabimage] = useState(defaultValueImage);
+    const [tabtitle, settabtitle] = useState('');
     const tabs = useSelector(state => state.appTabs.tabs);
     const tabOpenStatus = useSelector(state => state.appTabs.newtabpage)
 
@@ -65,6 +66,8 @@ function NewTabPage() {
                 settabSavingProcess(false);
                 settaburl('')
                 dispatch(closenewtabpage())
+                settabimage(defaultValueImage)
+                settabtitle('')
             }, 1000)
         }
     };
@@ -73,7 +76,7 @@ function NewTabPage() {
         return (
             <div id={`tab-box-new`} className='tab-box w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1 active' onClick={() => { dispatch(closenewtabpage()) }}>
                 <div onClick={(e) => { e.stopPropagation() }} className='tab-card bg-slate-50 dark:bg-slate-800 p-2 rounded-lg shadow-sm min-h-[90px]'>
-                    <img className='w-[65%] mt-1 max-w-[100px] aspect-square mx-auto rounded-lg pointer-events-none' src={tabimage} alt='' />
+                    <img className={`w-[65%] mt-1 max-w-[100px] aspect-square mx-auto rounded-lg pointer-events-none `} src={tabimage} alt='' />
                     <p className='pointer-events-none'><small className='text-center block truncate mt-2'>{tabtitle}</small></p>
 
                     <div className='details' onClick={e => { e.stopPropagation() }}>

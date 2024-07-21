@@ -87,12 +87,24 @@ export const appSetting = createSlice({
             style2: {
                 BodyImageUrl: 'https://images.pexels.com/photos/691668/pexels-photo-691668.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             },
+            style5: {
+                BodyImageUrl: 'https://images.pexels.com/photos/1423601/pexels-photo-1423601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            },
+            style6: {
+                BodyImageUrl: 'https://images.pexels.com/photos/985266/pexels-photo-985266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            },
+            style7: {
+                BodyImageUrl: 'https://images.pexels.com/photos/5269604/pexels-photo-5269604.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            },
+            style8: {
+                BodyImageUrl: 'https://images.pexels.com/photos/91216/pexels-photo-91216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            },
             style3: {
                 BodyImageUrl: 'https://images.pexels.com/photos/1287142/pexels-photo-1287142.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             },
             style4: {
                 BodyImageUrl: 'https://images.pexels.com/photos/1353938/pexels-photo-1353938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            }
+            },
         },
         selectedBackgroundImageStyleName: 'none',
         theme: 'light'

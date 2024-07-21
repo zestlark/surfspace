@@ -24,9 +24,12 @@ import { getSettingData } from '../app/reducers/appSettingReducer';
 import { getSearchEngine } from '../app/reducers/appSearchEngineReducer';
 import { getAllNotes } from '../app/reducers/appNotesReducer.js'
 import { getAllTabs } from '../app/reducers/appTabsReducer.js'
+import Loading from '../overpages/Loading.js';
 
 const HomeView = () => {
     const dispatch = useDispatch()
+
+    const [loadingstages, setloadingstages] = useState({ loading: false, loadingmessage: 'tabs' });
 
     const [emailVerifyPage, setemailVerifyPage] = useState(false)
 
@@ -72,25 +75,45 @@ const HomeView = () => {
 
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            if (!user) {
-                dispatch(openAuthPage());
-            } else if (!user.emailVerified) {
-                setemailVerifyPage(true);
-            } else {
-                const { email, uid, photoURL, displayName, emailVerified, accessToken } = user
-                dispatch(appsetUser({ email, uid, photoURL, displayName, emailVerified, accessToken }))
-                setemailVerifyPage(false);
+        const fetchData = async () => {
+            setloadingstages({ loading: true, loadingmessage: 'profile' });
 
-                // database calls
-                dispatch(getSettingData())
-                dispatch(getSearchEngine());
-                dispatch(getAllNotes())
-                dispatch(getAllHistory())
-                dispatch(getAllTabs())
-            }
-        });
-        return () => unsubscribe();
+            const unsubscribe = auth.onAuthStateChanged(async (user) => {
+                if (!user) {
+                    dispatch(openAuthPage());
+                    setloadingstages({ loading: false, loadingmessage: 'profile' });
+                } else if (!user.emailVerified) {
+                    setemailVerifyPage(true);
+                    // setloadingstages({ loading: false, loadingmessage: 'profile' })
+                } else {
+                    const { email, uid, photoURL, displayName, emailVerified, accessToken } = user;
+                    setloadingstages({ loading: true, loadingmessage: 'profile' });
+                    await dispatch(appsetUser({ email, uid, photoURL, displayName, emailVerified, accessToken }));
+
+                    setemailVerifyPage(false);
+
+                    // Database calls
+                    setloadingstages({ loading: true, loadingmessage: 'searchengine' });
+                    await dispatch(getSettingData());
+                    await dispatch(getSearchEngine());
+
+                    setloadingstages({ loading: true, loadingmessage: 'notes' });
+                    await dispatch(getAllNotes());
+
+                    setloadingstages({ loading: true, loadingmessage: 'history' });
+                    await dispatch(getAllHistory());
+
+                    setloadingstages({ loading: true, loadingmessage: 'tabs' });
+                    await dispatch(getAllTabs());
+
+                    setloadingstages({ loading: false, loadingmessage: 'tabs' });
+                }
+            });
+
+            return () => unsubscribe();
+        };
+
+        fetchData();
     }, [dispatch]);
 
     return (
@@ -128,7 +151,7 @@ const HomeView = () => {
                         <Weather />
                     </div>
 
-                    <div className='SearchBox bg-gray-100 dark:bg-gray-800 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
+                    <div className='SearchBox bg-gray-100 bg-opacity-70 backdrop-blur-sm dark:bg-gray-800 dark:bg-opacity-70 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
                         <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer rounded-full' src={selectedSearchEngine?.image} alt='' />
                         <input id='search' autoComplete="off" onFocus={handleInpputFocus} onChange={e => setSearchValue(e.target.value)} value={SearchValue} onKeyDown={handleenterSearch} className='p-3 pl-3 lg:pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
                         <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
@@ -163,6 +186,10 @@ const HomeView = () => {
 
                 {emailVerifyPage ? <EmailVerify /> : ''}
 
+                {loadingstages.loading ?
+                    <Loading elem={loadingstages} />
+                    : ''
+                }
             </div >
         </>
     );

@@ -80,14 +80,14 @@ const Tabs = () => {
             <p className='px-1'><small>Tabs</small></p>
             <div className='p-[2px] mt-1 flex flex-wrap items-stretch'>
                 <div className='w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1' onClick={handleNewTab}>
-                    <div className='w-full cursor-pointer bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-white backdrop-blur-lg flex justify-center items-center min-h-[90px] h-full rounded-md'>
+                    <div className='w-full cursor-pointer bg-slate-50 bg-opacity-70 dark:bg-slate-800 dark:bg-opacity-70 text-slate-500 dark:text-white backdrop-blur-lg flex justify-center items-center min-h-[90px] h-full rounded-md'>
                         <i className="ri-add-large-line"></i>
                     </div>
                 </div>
 
-                {tabs.reverse().map((tab) => (
+                {tabs.map((tab) => (
                     <div key={tab.id} id={`tab-box-${tab.id}`} onClick={handleTabBoxclick} className='tab-box w-1/4 sm:w-1/5 md:w-[1/6] lg:w-[12.5%] p-[2px] mb-1'>
-                        <div onContextMenu={handleContext} onClick={(e) => { handleTabCardClick(e, tab.url) }} className='tab-card bg-slate-50 dark:bg-slate-800 p-2 rounded-lg shadow-sm min-h-[90px]'>
+                        <div onContextMenu={handleContext} onClick={(e) => { handleTabCardClick(e, tab.url) }} className='tab-card bg-slate-50 bg-opacity-70 dark:bg-slate-800 dark:bg-opacity-70 backdrop-blur-sm p-2 rounded-lg shadow-sm min-h-[90px]'>
                             <img className='w-[65%] mt-1 max-w-[100px] aspect-square mx-auto rounded-lg pointer-events-none' src={tab.icon} alt='' />
                             <p className='pointer-events-none'><small className='text-center block truncate mt-2'>{tab.title || 'untitled'}</small></p>
 

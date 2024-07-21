@@ -39,7 +39,7 @@ const ZBlog = () => {
                 {zblogData.length > 0 ? zblogData.slice(0, 8).map((blog, index) => {
                     return (
 
-                        <div key={index} className="flex bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden items-stretch mb-3">
+                        <div key={index} className="flex bg-slate-100 bg-opacity-70 backdrop-blur-sm dark:bg-slate-800 dark:bg-opacity-70 rounded-xl overflow-hidden items-stretch mb-3">
                             <img
                                 src={blog.imageUrl}
                                 alt=""

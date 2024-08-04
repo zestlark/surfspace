@@ -41,7 +41,7 @@ const Notes = ({ closeNotesPage }) => {
 
                         const newcolor = colorcode[colorcount]
                         return ((
-                            <div onClick={(e) => { handleNotesBigShow(true, newcolor, note) }} key={note.id} className="text-slate-800 mockup-code min-w-[48%] max-w-[48%] text-sm shadow-sm" style={{ background: newcolor }}>
+                            <div onClick={(e) => { handleNotesBigShow(true, newcolor, note) }} key={note.id} className="text-slate-800 mockup-code min-w-[48%] max-w-[48%] text-sm shadow-sm cursor-pointer" style={{ background: newcolor }}>
                                 <p className='px-4 line-clamp-3'>{note.text}</p>
                             </div>
                         ))

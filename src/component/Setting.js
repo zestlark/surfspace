@@ -12,7 +12,7 @@ import { appAuthLogout } from '../app/reducers/appAuthReducer'
 import moment from 'moment';
 import { deleteAppHistoryThunk } from '../app/reducers/appHistoryReducer';
 
-const Setting = ({ closeSettingPage }) => {
+const Setting = ({ handlesearchValue, closeSettingPage }) => {
     const dispatch = useDispatch()
     const selectedEngine = useSelector(state => state.appSearchEngine.selectedEngine)
     const location = useSelector(state => state.appSetting.location)
@@ -106,8 +106,11 @@ const Setting = ({ closeSettingPage }) => {
                             {apphistory.map(history => (
                                 <div key={history.id}>
                                     <div className='flex justify-between items-center gap-2 mt-2 relative'>
-                                        <p className='text-[13px] flex justify-between'>{history.search}</p>
-                                        <span className='text-[11px] opacity-70 absolute left-[50%] -translate-x-[50%]'>{moment(history.time).fromNow()}</span>
+                                        <p className='text-[13px]'>
+                                            <span className='line-clamp-2 cursor-pointer' onClick={() => { handlesearchValue(history.search); closeSettingPage() }}>{history.search}</span>
+                                            <span className='text-[11px] block opacity-70'>{moment(history.time).fromNow()}</span>
+
+                                        </p>
                                         <i className="ri-close-line text-red-400 cursor-pointer" onClick={() => { dispatch(deleteAppHistoryThunk(history.id)) }}></i>
                                     </div>
                                 </div>

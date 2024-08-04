@@ -50,7 +50,7 @@ const HomeView = () => {
     }
 
     const searchToData = async (data = null) => {
-        const searchTerm = data || SearchValue;
+        const searchTerm = data ?? SearchValue;
         if (searchTerm.length !== 0) {
             dispatch(saveAppHistory(searchTerm));
             dispatch(searchPreProcess(searchTerm));
@@ -194,7 +194,7 @@ const HomeView = () => {
                 </div>
 
                 {settingSection ? <div className='fixed top-0 left-0  w-screen h-[100dvh] z-30 flex justify-center items-end md:items-center md:backdrop-blur-md' onClick={() => { setsettingSection(false) }}>
-                    <Setting closeSettingPage={() => { navigate('/') }} />
+                    <Setting closeSettingPage={() => { navigate('/') }} handlesearchValue={setSearchValue} />
                 </div> : ''}
 
                 <NoteShowBig />

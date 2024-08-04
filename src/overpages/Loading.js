@@ -21,8 +21,8 @@ function Loading({ elem }) {
 
     return (
         <div className='fixed w-screen h-screen top-0 left-0 backdrop-blur-3xl z-30 flex justify-center items-center'>
-            <div className='slide-top text-center max-h-[250px] bg-slate-100 border border-black dark:border-slate-600 dark:bg-slate-800 w-[250px] rounded-lg p-5'>
-                <div className='relative w-[70px] h-[70px] mx-auto my-6 overflow-hidden'>
+            <div className='slide-top text-center max-h-[80px] bg-slate-100 border border-black dark:border-slate-600 dark:bg-slate-800 w-auto gap-2 rounded-lg p-5 flex items-center justify-start'>
+                <div className='relative w-[40px] h-[40px] mx-auto my-6 overflow-hidden'>
                     {Object.keys(stage).map((key, i) => (
                         <img
                             className={`w-full h-full slide-top-fast`}

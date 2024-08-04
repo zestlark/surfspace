@@ -20,6 +20,10 @@
         height: 100%;
     } */
 
+    .collapse-checkbox:checked + .collapse-title .arrow-icon {
+        transform: rotate(90deg);
+    }
+
     .tab-box.active {
         position: fixed;
         width: 100vw;

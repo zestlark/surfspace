@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { database, dbref, dbset, dbget, auth, dbremove } from '../firebase/config';
 
 // Thunk to add a tab and save it to the database
@@ -10,7 +10,7 @@ export const addTab = createAsyncThunk(
             if (!userId) throw new Error("User not authenticated");
 
             // Ensure to invoke nanoid as a function to generate a unique ID
-            const newtabobj = { id: nanoid(), url: tab.url, title: tab.title, icon: tab.icon };
+            const newtabobj = { id: Date.now(), url: tab.url, title: tab.title, icon: tab.icon };
             const newTabRef = dbref(database, `surfspace/users/${userId}/tabs/${newtabobj.id}`);
             await dbset(newTabRef, newtabobj);
 

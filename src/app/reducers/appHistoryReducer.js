@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, database, dbref, dbset, dbget, dbremove } from "../firebase/config";
 
 // Thunk to save application history
@@ -10,7 +10,7 @@ export const saveAppHistory = createAsyncThunk(
             if (!userId) {
                 throw new Error("User not authenticated");
             }
-            const newHistoryObj = { id: nanoid(), search: history, time: Date.now() }
+            const newHistoryObj = { id: Date.now(), search: history, time: Date.now() }
             const historyRef = dbref(database, `surfspace/users/${userId}/history/${newHistoryObj.id}`);
             await dbset(historyRef, newHistoryObj);
             return newHistoryObj;

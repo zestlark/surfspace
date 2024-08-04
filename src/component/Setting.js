@@ -9,6 +9,8 @@ import avatarimage from '../app/scripts/avatar';
 import { setSettingData } from '../app/reducers/appSettingReducer';
 import { saveSearchEngine } from '../app/reducers/appSearchEngineReducer';
 import { appAuthLogout } from '../app/reducers/appAuthReducer'
+import moment from 'moment';
+import { deleteAppHistoryThunk } from '../app/reducers/appHistoryReducer';
 
 const Setting = ({ closeSettingPage }) => {
     const dispatch = useDispatch()
@@ -16,6 +18,9 @@ const Setting = ({ closeSettingPage }) => {
     const location = useSelector(state => state.appSetting.location)
     const backgroundImages = useSelector(state => state.appSetting.background)
     const selectedBackgroundImageStyleName = useSelector(state => state.appSetting.selectedBackgroundImageStyleName)
+
+    const apphistory = useSelector(state => state.appHistory.history).slice().reverse()
+
     // const user = useSelector(state => state.appAuth.user)
 
     const handleSearchEngineChange = (e) => {
@@ -30,6 +35,12 @@ const Setting = ({ closeSettingPage }) => {
 
     const handleappauhlogout = () => {
         dispatch(appAuthLogout())
+    }
+
+    const handleAllHisstoryDeleteAsync = () => {
+        apphistory.forEach(element => {
+            dispatch(deleteAppHistoryThunk(element.id))
+        })
     }
 
     return (
@@ -49,7 +60,7 @@ const Setting = ({ closeSettingPage }) => {
 
                 <div className='setting-box'>
                     <div className='bg-slate-50 dark:bg-slate-900 px-3 py-3 pb-2 mt-6 rounded-lg flex flex-col gap-4'>
-                        <div className='flex justify-between items-center '><p className='text-[14px]'>Theme</p> <span className='opacity-70 text-[14px]'><Theme /></span></div>
+                        <div className='flex justify-between items-center '><p className='text-[14px] -mt-1'>Theme</p> <span className='opacity-70 text-[14px]'><Theme /></span></div>
                     </div>
 
                     <div className='bg-slate-50 dark:bg-slate-900 px-3 py-2 pt-1 mt-3 rounded-lg'>
@@ -83,6 +94,27 @@ const Setting = ({ closeSettingPage }) => {
                             })}
                         </div>
                     </div>
+
+                    {/* <div className='bg-slate-50 dark:bg-slate-900 px-3 py-2 pt-1 mt-3 rounded-lg'>
+                        <p><small>History</small></p> */}
+
+                    <div className="collapse mb-1 bg-slate-50 dark:bg-slate-900 mt-3 rounded-lg">
+                        <input type="checkbox" className='m-0 p-0 collapse-checkbox' />
+                        <div className="collapse-title px-3 flex justify-between items-center text-[14px]"><p>History</p><i className="ri-arrow-right-s-line arrow-icon transition-all"></i></div>
+                        <div className="collapse-content px-3">
+                            <p className='flex justify-between items-center mb-2 dark:bg-slate-700 bg-slate-200 p-3 -mx-3'><small>{apphistory.length} Results</small><button onClick={handleAllHisstoryDeleteAsync} className='bg-red-400 bg-opacity-20 text-red-500 px-2 py-1 pt-0.5 rounded-md'><small>Clear all</small></button></p>
+                            {apphistory.map(history => (
+                                <div key={history.id}>
+                                    <div className='flex justify-between items-center gap-2 mt-2 relative'>
+                                        <p className='text-[13px] flex justify-between'>{history.search}</p>
+                                        <span className='text-[11px] opacity-70 absolute left-[50%] -translate-x-[50%]'>{moment(history.time).fromNow()}</span>
+                                        <i className="ri-close-line text-red-400 cursor-pointer" onClick={() => { dispatch(deleteAppHistoryThunk(history.id)) }}></i>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    {/* </div> */}
 
                     <div className='bg-slate-50 dark:bg-slate-900 px-3 py-3 mt-3 rounded-lg flex flex-col gap-4'>
                         <div className='flex justify-between items-center '><p className='text-[14px]'>Country</p> <span className='opacity-70 text-[14px]'>{location.country}</span></div>

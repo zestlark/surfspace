@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { colorcode } from "../scripts/colors";
 import { auth, database, dbref, dbset, dbget, dbremove } from "../firebase/config";
 
@@ -11,7 +11,7 @@ export const saveNote = createAsyncThunk(
             if (!userId) {
                 throw new Error("User not authenticated");
             }
-            const newnoteobj = { id: nanoid(), text: note, time: Date.now() }
+            const newnoteobj = { id: Date.now(), text: note, time: Date.now() }
             const noteRef = dbref(database, `surfspace/users/${userId}/notes/${newnoteobj.id}`);
             await dbset(noteRef, newnoteobj);
             //thunkAPI.dispatch(addNotes(newnoteobj))

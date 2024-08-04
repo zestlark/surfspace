@@ -49,10 +49,11 @@ const HomeView = () => {
         setSearchValue(search)
     }
 
-    const searchToData = async () => {
-        if (SearchValue.length !== 0) {
-            dispatch(saveAppHistory(SearchValue))
-            dispatch(searchPreProcess(SearchValue))
+    const searchToData = async (data = null) => {
+        const searchTerm = data || SearchValue;
+        if (searchTerm.length !== 0) {
+            dispatch(saveAppHistory(searchTerm));
+            dispatch(searchPreProcess(searchTerm));
         }
     }
 
@@ -68,7 +69,7 @@ const HomeView = () => {
         window.location.href = '#search'
     }
 
-    const handleSearchSuggestion = (data) => {
+    const handleSearchSuggestion = (data, direct = false) => {
         if (data.toLowerCase() === SearchValue.toLowerCase()) {
             searchToData()
         }
@@ -166,14 +167,14 @@ const HomeView = () => {
                         <Weather />
                     </div>
 
-                    <div className='SearchBox bg-gray-100 bg-opacity-70 backdrop-blur-sm dark:bg-gray-800 dark:bg-opacity-70 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
+                    <div className='SearchBox bg-gray-100 bg-opacity-70 backdrop-blur-md dark:bg-gray-800 dark:bg-opacity-70 rounded-full p-1 pl-2 mt-5 md:mt-10 flex justify-center items-center sticky top-2 z-30'>
                         <img onClick={() => { setsettingSection(true) }} className='w-10 cursor-pointer rounded-full' src={selectedSearchEngine?.image} alt='' />
                         <input id='search' autoComplete="off" onFocus={handleInpputFocus} onChange={e => setSearchValue(e.target.value)} value={SearchValue} onKeyDown={handleenterSearch} className='p-3 pl-3 lg:pl-4 bg-transparent outline-none w-full dark:text-white dark:placeholder-gray-400' placeholder='Search' />
                         <i onClick={() => { searchToData() }} className="ri-search-line w-10 text-xl"></i>
                     </div>
 
-                    <div className={`bg-slate-50 dark:bg-slate-800 mt-2 sticky top-[70px] z-30 rounded-3xl overflow-hidden ${SearchValue.length === 0 ? 'hidden' : ''}`}>
-                        <SearchSuggestion searchValue={SearchValue} handleSearchSuggestion={handleSearchSuggestion} />
+                    <div className={`bg-slate-50 bg-opacity-70 backdrop-blur-md dark:bg-slate-800 dark:bg-opacity-70 mt-2 sticky top-[70px] z-30 rounded-3xl overflow-hidden ${SearchValue.length === 0 ? 'hidden' : ''}`}>
+                        <SearchSuggestion searchValue={SearchValue} handleSearchSuggestion={handleSearchSuggestion} handleDirectSearch={searchToData} />
                     </div>
 
                     <History addHistoryToSearch={handleAddHistoryToSearch} />

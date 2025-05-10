@@ -81,6 +81,15 @@ export const appSetting = createSlice({
             countryCode: ''
         },
         background: {
+            style9:{
+                BodyImageUrl:"https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            style10:{
+                BodyImageUrl:"https://images.pexels.com/photos/1324803/pexels-photo-1324803.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            },
+            style11:{
+                BodyImageUrl:"https://images.pexels.com/photos/772429/pexels-photo-772429.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            },
             style1: {
                 BodyImageUrl: 'https://images.pexels.com/photos/421788/pexels-photo-421788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
             },

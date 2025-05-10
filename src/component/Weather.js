@@ -68,7 +68,7 @@ const Weather = () => {
 
             {weatherBIgBox ?
                 <div onClick={() => { setweatherBIgBox(false) }} className='fixed w-full h-full top-0 left-0 backdrop-blur-lg z-40 flex justify-center items-center'>
-                    <div onClick={(e) => e.stopPropagation()} className='bg-slate-100 bg-opacity-70 dark:bg-slate-700 dark:bg-opacity-70 rounded-lg py-4 px-5 max-w-[300px] text-center slide-top'>
+                    <div onClick={(e) => e.stopPropagation()} className='bg-slate-100 bg-opacity-70 dark:bg-slate-700 dark:bg-opacity-70 rounded-lg py-4 px-5 min-w-72 max-w-[300px] text-center slide-top'>
                         <h3 className='font-bold text-md mb-2 uppercase'>Today</h3>
                         <img className='w-[100px] mx-auto' src={weather?.current?.condition?.icon} alt='' />
                         <p className='mt-2 text-sm mb-3'>{weather?.current?.condition?.text}</p>

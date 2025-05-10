@@ -27,7 +27,7 @@ const Notes = ({ closeNotesPage }) => {
                 <p className='md:hidden p-0 pt-2 pb-3 bg-white dark:bg-slate-800 sticky top-0 flex justify-start items-center gap-3'><i onClick={() => { closeNotesPage() }} className="ri-arrow-left-s-line text-2xl bg-slate-100 dark:bg-slate-900 w-9 h-9 flex justify-center items-center rounded-full"></i> Notes</p>
 
                 <div className='flex gap-3 justify-between items-stretch flex-wrap mt-3 overflow-scroll max-h-[100%] no-scrollbar'>
-                    {appNotes.length !== 8 ?
+                    {appNotes.length !== 50 ?
                         <div className='min-w-[48%] min-h-[100px] max-w-[48%] border-2 bg-[#E9E4FC] cursor-pointer text-slate-500 backdrop-blur-lg text-2xl rounded-2xl flex justify-center flex-col items-center' onClick={handleNewNote}>+</div>
                         : ''
                     }
